@@ -1,0 +1,138 @@
+.select, .others_content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    text-transform: uppercase;
+    font-family: 'Nunito Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.current_content {
+    position: relative;
+    z-index: 999;
+    cursor: pointer;
+    user-select: none;
+}
+
+.select.right, .select.right .others_content{
+    flex-direction: row-reverse;
+}
+
+.others_content {
+    position: relative;
+    z-index: 1;
+    user-select: none;
+}
+
+.others_content img{
+    margin-right: 15px;
+    filter: invert();
+    display: flex;
+    align-self: center;
+    width: 20px;
+}
+
+.content, .current_content{
+    outline: 0;
+    transition: outline 0.3s ease-in-out;
+}
+
+.content:hover, .current_content:hover{
+    outline: white solid 1px;
+}
+
+.others_content div:hover{
+    cursor: pointer;
+}
+
+.content, .current_content {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-content: center;
+
+    border-radius: 50%;
+}
+
+.show_list .current_content {
+    cursor: default;
+    outline: 1px solid white;
+    opacity: .5;
+    pointer-events: none;
+}
+
+.show_list .others_content div{
+    visibility: visible;
+    opacity: 0;
+    animation: slide-in 0.5s ease-out forwards;
+}
+
+.hide_list .others_content div{
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: none;
+}
+
+.right.show_list .others_content div {
+    transform: translateX(-100%);
+}
+
+.left.show_list .others_content div{
+    transform: translateX(100%);
+}
+
+.right.hide_list .others_content div{
+    animation: slide-out-reverse 0.5s ease-out forwards;
+}
+
+.left.hide_list .others_content div{
+    animation: slide-out 0.5s ease-out forwards;
+}
+
+.show_list .others_content div:nth-child(1),
+.hide_list .others_content div:nth-child(1) {
+    animation-delay: .4s;
+}
+
+.show_list .others_content div:nth-child(2),
+.hide_list .others_content div:nth-child(2) {
+    animation-delay: .3s;
+}
+
+.show_list .others_content div:nth-child(3),
+.hide_list .others_content div:nth-child(3) {
+    animation-delay: .2s;
+}
+
+.show_list .others_content div:nth-child(4),
+.hide_list .others_content div:nth-child(4) {
+    animation-delay: .1s;
+}
+
+@keyframes slide-in {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slide-out {
+    to {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateX(100%);
+    }
+}
+
+@keyframes slide-out-reverse {
+    to {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateX(-100%);
+    }
+}

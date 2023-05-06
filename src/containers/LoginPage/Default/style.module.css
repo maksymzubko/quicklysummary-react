@@ -1,0 +1,59 @@
+.container{
+    width: 100%;
+    height: calc(100vh - var(--header-height));
+
+    display: grid;
+    place-content: center;
+
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    /*align-items: center;*/
+    justify-content: center;
+    gap: 10px;
+
+    padding: 48px;
+    width: 20vw;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 20px rgba(26, 25, 29, 0.2);
+    border-radius: 6px;
+}
+
+.login{
+    align-self: center;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 33px;
+}
+
+.create_account{
+    align-self: center;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+}
+
+.continue{
+    align-self: center;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.auth_buttons{
+    margin: 48px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.text_field{
+    margin-top: 24px;
+    margin-bottom: 50px;
+}
