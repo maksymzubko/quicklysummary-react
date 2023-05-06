@@ -12,6 +12,7 @@ const HeaderLayout = () => {
             const header = document.querySelector(".header");
             const computedHeight = getComputedStyle(header).height;
             document.documentElement.style.setProperty('--header-height', computedHeight);
+            console.log(computedHeight)
         }
 
         updateHeaderHeight();

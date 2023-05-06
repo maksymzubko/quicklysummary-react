@@ -16,24 +16,57 @@ const GoogleAuthPage = Loader(
     lazy(() => import('./containers/LoginPage/Google/index'))
 );
 
-const HeaderLayout = Loader(
-    lazy(() => import('./layouts/HeaderLayout/index'))
-);
+const HeaderLayout = lazy(() => import('./layouts/HeaderLayout/index'))
 
 const LandingPage = Loader(
     lazy(() => import('./containers/Landing/index'))
 );
 
+const LoginPage = Loader(
+    lazy(() => import('./containers/LoginPage/Login/index'))
+);
+
+const RegisterPage = Loader(
+    lazy(() => import('./containers/LoginPage/Register/index'))
+);
+
+const MainPage = Loader(
+    lazy(() => import('./containers/MainPage/index'))
+);
+
+
+
 export const links = {
     auth: '/auth',
-    register: '/register',
-    main: '/',
+    register: '/auth/register',
+    landing: '/',
+    main: '/main',
+    login: '/auth/login',
 }
 
 export const routes =
     {
         'authorized':
             [
+                {
+                    path: '/',
+                    element: <HeaderLayout/>,
+                    children:
+                        [
+                            {
+                                path: '/',
+                                element: <LandingPage/>,
+                            },
+                            {
+                                path: '/main',
+                                element: <MainPage/>,
+                            },
+                        ]
+                }
+            ],
+        'not-authorized':
+            [
+
                 {
                     path: '/',
                     element: <HeaderLayout/>,
@@ -53,18 +86,15 @@ export const routes =
                             },
                             {
                                 path: '/auth/login',
-                                element: <GoogleAuthPage/>
+                                element: <LoginPage/>
                             },
                             {
                                 path: '/auth/register',
-                                element: <GoogleAuthPage/>
+                                element: <RegisterPage/>
                             }
                         ]
                 }
-            ],
-        'not-authorized':
-            [
-                {}
+
             ]
     }
 

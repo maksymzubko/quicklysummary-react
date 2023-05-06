@@ -1,4 +1,4 @@
-import {Box} from "@mui/material";
+import {Box, CircularProgress} from "@mui/material";
 import cl from './style.module.css'
 
 export interface ArgsButton {
@@ -18,6 +18,8 @@ export interface ButtonData {
         icon: any;
         needRevert?: boolean;
     };
+    loading?: boolean;
+    disabled?: boolean;
 }
 
 const CustomButton = (data: ButtonData) => {
@@ -31,10 +33,14 @@ const CustomButton = (data: ButtonData) => {
                 "--data-outline": data.args?.data_outline ?? "white",
                 "--data-outlinehover": data.args?.data_outline_hover ?? "none",
             }}
-
-            onClick={data.onClick} className={cl.container}>
-            {data.icon_data && <img src={data.icon_data.icon} className={data.icon_data.needRevert ? cl.need_revert : ''} alt={''}/>}
-            {data.children}
+            onClick={data.onClick} className={[cl.container, data.disabled ? cl.disabled : ''].join(' ')}>
+            {data.loading && <CircularProgress sx={{height: '16px !important', width: '16px !important'}}/>}
+            {!data.loading && <>
+                {data.icon_data &&
+                    <img src={data.icon_data.icon} className={data.icon_data.needRevert ? cl.need_revert : ''}
+                         alt={''}/>}
+                {data.children}
+            </>}
         </Box>
     );
 };

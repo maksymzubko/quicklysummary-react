@@ -1,6 +1,6 @@
 import CustomButton, {ButtonData} from "../index";
 
-const AuthButton = (data: ButtonData) => {
+const GoogleButton = (data: ButtonData) => {
     return (
         <CustomButton
             {...data}
@@ -21,4 +21,4 @@ const AuthButton = (data: ButtonData) => {
     );
 };
 
-export default AuthButton;
+export default GoogleButton;

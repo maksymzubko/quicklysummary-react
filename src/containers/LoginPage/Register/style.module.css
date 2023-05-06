@@ -7,6 +7,7 @@
     align-items: center;
 
     font-family: 'Nunito Sans', sans-serif;
+    color: #1A191D;
 }
 
 .form{
@@ -16,6 +17,7 @@
     justify-content: center;
     gap: 10px;
 
+    height: calc(60vh - var(--header-height));
     padding: 48px;
     width: 20vw;
     background: #FFFFFF;
@@ -23,7 +25,7 @@
     border-radius: 6px;
 }
 
-.login{
+.register{
     align-self: center;
     font-style: normal;
     font-weight: 600;
@@ -31,30 +33,11 @@
     line-height: 33px;
 }
 
-.create_account{
-    align-self: center;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 22px;
-}
-
-.continue{
-    align-self: center;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 12px;
-    line-height: 16px;
-}
-
-.auth_buttons{
-    margin: 48px 0;
+.fields{
     display: flex;
+    /*align-items: center;*/
     flex-direction: column;
-    gap: 16px;
-}
-
-.text_field{
-    margin-top: 24px;
-    margin-bottom: 50px;
+    gap: 15px;
+    justify-content: center;
+    margin: calc(18vh - var(--header-height)) 0;
 }

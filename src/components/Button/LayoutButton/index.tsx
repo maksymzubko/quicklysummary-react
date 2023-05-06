@@ -3,6 +3,7 @@ import CustomButton, {ButtonData} from "../index";
 const LayoutButton = (data: ButtonData) => {
     return (
         <CustomButton
+            {...data}
             onClick={data.onClick}
             args=
                 {{

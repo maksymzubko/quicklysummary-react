@@ -10,7 +10,7 @@ agent.interceptors.request.use(
     if (token) {
         try{
             const data = JSON.parse(token);
-            config.headers!.Authorization = `Bearer ${data.access_token.toString()}`;
+            config.headers!.Authorization = `Bearer ${data.access_token.toString()}${data.isCustom ? ' true' : ''}`;
         }
         catch (e){
             localStorage.removeItem('quickly_summary_token');

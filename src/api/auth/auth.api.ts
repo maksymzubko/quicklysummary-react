@@ -10,7 +10,7 @@ class AuthApi {
 
         if (response.status === 200 || response.status === 201) {
             const {id, email, access_token } = response.data;
-            localStorage.setItem('quickly_summary_token', JSON.stringify({id, email, access_token}))
+            localStorage.setItem('quickly_summary_token', JSON.stringify({id, email, access_token, isCustom: false}))
             return response.data;
         }
 
@@ -30,13 +30,39 @@ class AuthApi {
     }
 
 
-    async loginViaToken(token: string): Promise<boolean> {
+    async loginViaToken(token: string): Promise<LoginResponse> {
         const response: AxiosResponse = await agent.get(
             `auth/login-token/${token}`
         );
 
         if (response.status === 200 || response.status === 201) {
-            return true;
+            const {id, email, access_token } = response.data;
+            localStorage.setItem('quickly_summary_token', JSON.stringify({id, email, access_token, isCustom: true}))
+            return response.data;
+        }
+
+        return undefined;
+    }
+
+    async verifyToken(token: string, isCustom = false): Promise<boolean> {
+        const response: AxiosResponse = await agent.get(
+            `auth/verify-token/${token}/${isCustom}`
+        );
+
+        if (response.status === 200 || response.status === 201) {
+            return response.data;
+        }
+
+        return undefined;
+    }
+
+    async emailExists(email: string): Promise<boolean> {
+        const response: AxiosResponse = await agent.post(
+            `auth/email-exists/`, {email: email}
+        );
+
+        if (response.status === 200 || response.status === 201) {
+            return response.data;
         }
 
         return undefined;
