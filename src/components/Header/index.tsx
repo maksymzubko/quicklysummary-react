@@ -21,7 +21,7 @@ const Header = () => {
 
     return (
         <Box className={[cl.container, 'header'].join(' ')}>
-            <Box className={cl.logo}>
+            <Box onClick={()=>{navigate(links.main)}} className={cl.logo}>
                 <img src={Logo} alt='logo'/>
                 QuicklySummary
             </Box>
