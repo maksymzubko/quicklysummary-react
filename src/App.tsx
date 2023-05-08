@@ -13,7 +13,6 @@ function App() {
     const isAuthorized = useSelector(SelectIsAuthorized)
     const routes = useRoutes(isAuthorized ? r.authorized : r["not-authorized"]);
     const [loaded, setLoaded] = useState(false)
-
     useEffect(() => {
         if (!loaded) {
             const timer = setTimeout(() => {

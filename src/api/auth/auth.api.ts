@@ -44,9 +44,9 @@ class AuthApi {
         return undefined;
     }
 
-    async verifyToken(token: string, isCustom = false): Promise<boolean> {
+    async verifyToken(): Promise<boolean> {
         const response: AxiosResponse = await agent.get(
-            `auth/verify-token/${token}/${isCustom}`
+            `auth/verify-token`
         );
 
         if (response.status === 200 || response.status === 201) {

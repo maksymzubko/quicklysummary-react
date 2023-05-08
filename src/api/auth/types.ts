@@ -16,6 +16,7 @@ export interface RegisterResponse {
 export interface LoginResponse {
     id: number,
     email: string,
-    access_token: string
+    access_token: string,
+    uuid: string,
 }
 
