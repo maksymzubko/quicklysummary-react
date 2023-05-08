@@ -3,6 +3,7 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 interface User {
     email: string | null,
     id: number | null,
+    uuid: string | null,
 }
 
 export interface UserState {
@@ -20,7 +21,6 @@ const userSlice = createSlice({
     initialState: INITIAL_STATE,
     reducers: {
         setUser: (state, action: PayloadAction<{user: User | null}>) => {
-            console.log(action.payload)
             state.user = action.payload.user;
         },
         setAuthorized: (state, action: PayloadAction<{isAuthorized: boolean}>) => {

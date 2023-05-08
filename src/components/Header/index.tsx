@@ -1,4 +1,4 @@
-import {Box, Button} from "@mui/material";
+import {Avatar, Box, Button} from "@mui/material";
 import Logo from './assets/logo.svg';
 import cl from './style.module.css'
 import {useCallback, useContext, useEffect, useState} from "react";
@@ -11,6 +11,8 @@ import {links} from "../../router";
 import authApi from "../../api/auth/auth.api";
 import {setAuthorized} from "../../redux/store/user/slice";
 import LoadContext from "../../contexts/loadContext";
+import userApi from "../../api/user/user.api";
+import HeaderDropDown from "../HeaderDropDown";
 const languageList = ['en', 'jp', 'ua', 'ru']
 
 const Header = () => {
@@ -23,13 +25,12 @@ const Header = () => {
     useEffect(() => {
         const token = localStorage.getItem('quickly_summary_token');
         if (token) {
-            const tokenResponse = JSON.parse(token);
-            authApi.verifyToken(tokenResponse.access_token, tokenResponse.isCustom)
+            authApi.verifyToken()
                 .then(() => {
                     dispatch(setAuthorized({isAuthorized: true}))
+                    userApi.getTickets().then().catch()
                     setLoaded(true)
                 }).catch(() => {
-                localStorage.removeItem('quickly_summary_token')
                 dispatch(setAuthorized({isAuthorized: false}))
                 setLoaded(true)
             })
@@ -50,6 +51,7 @@ const Header = () => {
             <Box className={cl.menu}>
                 <CustomSelector data={languageList} animationSide={AnimationSides.left} onChangeValue={()=>{}}/>
                 {isShow() && <HeaderButton onClick={()=>{navigate(links.auth)}}>Login</HeaderButton>}
+                {isAuthorized && <HeaderDropDown/>}
             </Box>
         </Box>
     );
