@@ -68,7 +68,7 @@ const DragResizeContainer = (data: DragResizeInterface) => {
     return (
         <Box className={[cl.container, data.text ? '' : cl.disabled].join(' ')}>
             <Divider className={cl.divider}/>
-            <Box style={{fontSize: data.fontSize, height: "100%"}} className={cl.text}>
+            <Box id={"initial_text_content"} style={{fontSize: data.fontSize, height: "100%"}} className={cl.text}>
                 {data.text ? data.text :
                     <Box sx={{display:"grid", placeContent:"center", width:"100%", height:"100%"}}>
                         This will show all text from your file

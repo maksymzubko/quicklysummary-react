@@ -1,91 +1,51 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Box, Divider, IconButton, SvgIcon} from "@mui/material";
 import cl from './style.module.css'
-import Sidebar from "./Sidebar";
+import Sidebar from "./Sidebar/index";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Adobe from './assets/adobe-acrobat-dc-logo-2020-1 1.svg'
-import PDFButton from "../../components/Button/PDFButton";
-import DragResizeContainer from "../../components/DragResizeContainer";
+import PDFButton from "../../components/Button/PDFButton/index";
+import DragResizeContainer from "../../components/DragResizeContainer/index";
 import CustomSelector, {AnimationSides} from "../../components/CustomSelector";
-import {TicketResponse} from "../../api/tickets/types";
-import {StatusInterface} from "./Sidebar/StatusComponent";
+import {useDispatch, useSelector} from "react-redux";
+import {SelectStatuses, SelectTickets} from "../../redux/store/manager/selector";
+import userApi from "../../api/user/user.api";
+import {addGPTResponse, addStatus, addTicket, setTickets, updateStatus} from "../../redux/store/manager/slice";
+import {GptRequest, Languages, TypeResponse} from "../../api/user/types";
+import {v4 as uuidv4} from "uuid";
+import {AlertType} from "react-mui-dropzone";
+import {SnackbarKey} from "notistack";
+import { jsPDF } from "jspdf";
 
 const MainPage = () => {
-    const [tickets, setTickets] = useState<TicketResponse[]>(
-        [
-            {
-                ticketId: 1,
-                ticketName: "File1.txt",
-                gptFiles: [{id: 0, content: "Gpt content"}],
-                ticketFileText: "Initial file text"
-            },
-            {
-                ticketId: 255,
-                ticketName: "File2.txt",
-                gptFiles: [{id: 0, content: "Gpt content"}, {id: 1, content: "Content"}],
-                ticketFileText: "Lorem"
-            },
-            {
-                ticketId: 2534,
-                ticketName: "File2.txt",
-                gptFiles: [{id: 0, content: "Gpt content"}, {id: 1, content: "Content"}],
-                ticketFileText: "Lorem"
-            },
-            {
-                ticketId: 2566,
-                ticketName: "File2.txt",
-                gptFiles: [{id: 0, content: "Gpt content"}, {id: 1, content: "Content"}],
-                ticketFileText: "Lorem"
-            },
-            {
-                ticketId: 223,
-                ticketName: "File2.txt",
-                gptFiles: [{id: 0, content: "Gpt content"}, {id: 1, content: "Content"}],
-                ticketFileText: "Lorem"
-            },
-            {
-                ticketId: 2123,
-                ticketName: "File2.txt",
-                gptFiles: [{id: 0, content: "Gpt content"}, {id: 1, content: "Content"}],
-                ticketFileText: "Lorem"
-            },
-            {
-                ticketId: 25,
-                ticketName: "File2.txt",
-                gptFiles: [{id: 0, content: "Gpt content"}, {id: 1, content: "Content"}],
-                ticketFileText: "Lorem"
-            },
-            {
-                ticketId: 23,
-                ticketName: "File2.txt",
-                gptFiles: [{id: 0, content: "Gpt content"}, {id: 1, content: "Content"}],
-                ticketFileText: "Lorem"
-            },
-        ])
-    const [statuses, setStatuses] = useState<StatusInterface[]>(
-        [
-            {id: 1, status: "Done", name: "File123.txt"},
-            {
-                id: 2,
-                status: "In process",
-                name: "File123123312x.txt"
-            },
-            {
-                id: 22,
-                status: "In process",
-                name: "File123123312x.txt"
-            },
-            {
-                id: 4,
-                status: "In process",
-                name: "File123123312x.txt"
-            }
-        ])
+    const tickets = useSelector(SelectTickets)
+    const statuses = useSelector(SelectStatuses)
+    const dispatch = useDispatch()
 
+    const [gptLanguage, setGptLanguage] = useState<Languages>(Languages.en)
     const [selectedTicket, setSelectedTicket] = useState(null)
     const [scale, setScale] = useState(100)
     const [selectedGpt, setSelectedGpt] = useState(null)
+    const [types, setTypes] = useState<TypeResponse[]>([])
+    const [loadingList, setLoadingList] = useState([])
+
+    useEffect(() => {
+        userApi.getTickets()
+            .then(res => {
+                dispatch(setTickets({tickets: res}))
+            })
+            .catch(err => {
+                console.log(err.response?.data?.message)
+            })
+        userApi.getTypes()
+            .then(res => {
+                setTypes(res)
+            })
+            .catch(err => {
+                console.log(err.response?.data?.message)
+            })
+    }, [])
 
     const scaleUp = () => {
         setScale(scale < 200 ? scale + 25 : scale)
@@ -109,18 +69,85 @@ const MainPage = () => {
     }
 
     const onChangeTicket = (id: number) => {
-        setSelectedGpt(0);
+        setSelectedGpt(types[0].id);
         setSelectedTicket(id);
     }
 
     const initialText = useCallback(() => {
-        return tickets.find(i=>i.ticketId===selectedTicket)?.ticketFileText;
-    }, [selectedTicket])
+        return tickets.find(i => i.ticketId === selectedTicket)?.ticketFileText;
+    }, [selectedTicket, tickets])
 
     const gptText = useCallback(() => {
-        return tickets.find(i=>i.ticketId===selectedTicket)
-            ?.gptFiles.find(g=>g.id === selectedGpt)?.content;
+        console.log(tickets, selectedTicket, selectedGpt)
+        return tickets.find(i => i.ticketId === selectedTicket)
+            ?.gptFiles.find(g => g.reqId === selectedGpt)?.content;
+    }, [selectedTicket, selectedGpt, tickets])
+
+    const onChangeLanguage = (lang: Languages) => {
+        setGptLanguage(lang);
+    }
+
+    const sendGPTReq = () => {
+        const id = uuidv4();
+        const ticketName = tickets.find(i => i.ticketId === selectedTicket)
+            ?.ticketName;
+        const selected = selectedGpt;
+        const selectedType = types.find(t=>t.id === selected);
+        const name = `${ticketName}[${selectedType.name}]`;
+
+        const list = selected === 2 ? [1,2] : [selected]
+        setLoadingList(prev=>[...prev, ...list]);
+
+        dispatch(addStatus({status: {id: id, name, status: "In process"}}))
+
+        const data = {reqId: selected, lang: Languages[gptLanguage], message: selectedType.message[gptLanguage], ticketId: selectedTicket} as GptRequest;
+
+        userApi.sendRequest(data).then(res=>{
+            dispatch(addGPTResponse({id: selectedTicket, gpt: res}))
+            dispatch(updateStatus({status: {id: id, name, status: "Done"}}))
+        }).catch(err=>{
+            onAlert(err?.response?.data?.message[0], "error")
+            dispatch(updateStatus({status: {id: id, name, status: "Error"}}))
+        }).finally(()=>setLoadingList(prev=>[...prev.filter(p=>!list.includes(p))]))
+    }
+
+    const onAlert = (message: string, variant: AlertType) => {
+        //@ts-ignore
+        const key: SnackbarKey = enqueueSnackbar(message, {variant: variant, onClick: () => closeSnackbar(key)})
+    }
+
+    const downloadPDF = (initialText = false) => {
+        const doc = new jsPDF();
+        const ticket = tickets.find(t=>t.ticketId === selectedTicket);
+        const gpt = ticket.gptFiles.find(g=>g.reqId === selectedGpt);
+        // const text = initialText ? document.getElementById("initial_text_content").innerText : document.getElementById("gpt_text_content").innerText;
+        const text = initialText ? ticket.ticketFileText : gpt.content;
+
+        doc.text(text, 10, 10, {maxWidth: 200});
+        const selectedType = types.find(t=>t.id === selectedGpt);
+        const ticketName = ticket.ticketName.replace(".txt", "");
+        const name = `${initialText ? ticketName : `${ticketName}[${selectedType.name}]`}.pdf`
+
+        doc.save(name);
+    }
+
+    const disabledStart = useCallback(() => {
+        if(selectedGpt === 6) return true;
+
+        const text = tickets.find(i => i.ticketId === selectedTicket)
+            ?.gptFiles.find(g => g.reqId === selectedGpt)?.content;
+
+        if (selectedTicket === null || selectedGpt === null)
+            return true;
+        if (text)
+            return true;
+
+        return false;
     }, [selectedTicket, selectedGpt])
+
+    const loadingStart = useCallback(() => {
+        return loadingList.includes(selectedGpt)
+    }, [selectedTicket, selectedGpt, loadingList])
 
     return (
         <Box className={[cl.container].join(' ')}>
@@ -154,7 +181,7 @@ const MainPage = () => {
                             </Box>
                         </Box>
                         {initialText() && <PDFButton onClick={() => {
-                            console.log('click')
+                            downloadPDF(true)
                         }} icon_data={{icon: Adobe, position: 'end'}}>Download as PDF</PDFButton>}
                     </Box>
                     <Box className={cl.drag_container}>
@@ -165,26 +192,12 @@ const MainPage = () => {
                 <Box id={"gpt"} className={cl.gpt_context}>
                     {/*<Box className={cl.top_content}>*/}
                     <Box className={cl.gpt_buttons}>
-                        <Box onClick={() => changeActiveGpt(0)}
-                             className={[cl.gpt_button, selectedGpt === 0 ? cl.active : ""].join(" ")}>Summary</Box>
-                        <Box onClick={() => changeActiveGpt(1)}
-                             className={[cl.gpt_button, selectedGpt === 1 ? cl.active : ""].join(" ")}>10
-                            Sentences</Box>
-                        <Box onClick={() => changeActiveGpt(2)}
-                             className={[cl.gpt_button, selectedGpt === 2 ? cl.active : ""].join(" ")}>Main
-                            Keywords</Box>
-                        <Box onClick={() => changeActiveGpt(3)}
-                             className={[cl.gpt_button, selectedGpt === 3 ? cl.active : ""].join(" ")}>People
-                            Mentioned</Box>
-                        <Box onClick={() => changeActiveGpt(4)}
-                             className={[cl.gpt_button, selectedGpt === 4 ? cl.active : ""].join(" ")}>Issues
-                            Discussed</Box>
-                        <Box onClick={() => changeActiveGpt(5)}
-                             className={[cl.gpt_button, selectedGpt === 5 ? cl.active : ""].join(" ")}>Custom</Box>
+                        {types.map(t => <Box key={t.id} onClick={() => changeActiveGpt(t.id)}
+                                             className={[cl.gpt_button, selectedGpt === t.id ? cl.active : ""].join(" ")}>{t.name}</Box>)}
                     </Box>
-                    <Box sx={{fontSize: getFontSize()}} className={cl.gpt_text}>
+                    <Box id={"gpt_text_content"} sx={{fontSize: getFontSize()}} className={cl.gpt_text}>
                         {gptText() ??
-                            <Box sx={{display:"grid", placeContent:"center", width:"100%", height:"100%"}}>
+                            <Box sx={{display: "grid", placeContent: "center", width: "100%", height: "100%"}}>
                                 This will show the general summary of the text above
                             </Box>
                         }
@@ -193,15 +206,13 @@ const MainPage = () => {
                     <Divider className={cl.divider}/>
                     <Box className={cl.gpt_buttons_bottom}>
                         <Box className={cl.left}>
-                            <PDFButton disabled={true} onClick={() => {
-                            }}>Start</PDFButton>
-                            {initialText() && <CustomSelector theme={'black'} data={['en', 'jp', 'ua', 'ru']}
+                            <PDFButton loading={loadingStart()} disabled={disabledStart()} onClick={sendGPTReq}>Start</PDFButton>
+                            {initialText() && <CustomSelector theme={'black'} data={['en', 'jp', 'ua', 'ru'] as Languages[]}
                                                               animationSide={AnimationSides.right}
-                                                              onChangeValue={() => {
-                                                              }}/>}
+                                                              onChangeValue={onChangeLanguage}/>}
                         </Box>
-                        {initialText() && <PDFButton onClick={() => {
-                            console.log('click')
+                        {initialText() && <PDFButton disabled={!gptText()} onClick={() => {
+                            downloadPDF(false)
                         }} icon_data={{icon: Adobe, position: 'end'}}>Download as PDF</PDFButton>}
                     </Box>
                 </Box>

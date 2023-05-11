@@ -1,5 +1,5 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {TicketResponse} from "../../../api/tickets/types";
+import {createSlice, PayloadAction, current} from "@reduxjs/toolkit";
+import {GptResponseDto, TicketResponse} from "../../../api/user/types";
 import {StatusInterface} from "../../../containers/MainPage/Sidebar/StatusComponent";
 
 export interface Manager {
@@ -16,32 +16,38 @@ const managerSlice = createSlice({
     name: "manager",
     initialState: INITIAL_STATE,
     reducers: {
-        setTickets: (state, action: PayloadAction<{tickets: TicketResponse[] | null}>) => {
+        setTickets: (state: Manager, action: PayloadAction<{tickets: TicketResponse[] | null}>) => {
             state.tickets = action.payload.tickets;
         },
-        addTicket: (state, action: PayloadAction<{ticket: TicketResponse | null}>) => {
+        addTicket: (state: Manager, action: PayloadAction<{ticket: TicketResponse | null}>) => {
             state.tickets.push(action.payload.ticket)
         },
-        removeTicket: (state, action: PayloadAction<{ticketId: number | null}>) => {
+        addGPTResponse: (state: Manager, action: PayloadAction<{id: number, gpt: GptResponseDto[] | null}>) => {
+            const index = state.tickets.findIndex(obj => obj.ticketId === action.payload.id);
+            if (index !== -1) {
+                state.tickets[index].gptFiles = [ ...state.tickets[index].gptFiles, ...action.payload.gpt ];
+            }
+        },
+        removeTicket: (state: Manager, action: PayloadAction<{ticketId: number | null}>) => {
             state.tickets = state.tickets.filter(t=>t.ticketId !== action.payload.ticketId)
         },
-        setStatuses: (state, action: PayloadAction<{statuses: StatusInterface[] | null}>) => {
+        setStatuses: (state: Manager, action: PayloadAction<{statuses: StatusInterface[] | null}>) => {
             state.statuses = action.payload.statuses;
         },
-        addStatus: (state, action: PayloadAction<{status: StatusInterface | null}>) => {
+        addStatus: (state:Manager, action: PayloadAction<{status: StatusInterface | null}>) => {
             state.statuses.push(action.payload.status)
         },
-        updateStatus: (state, action: PayloadAction<{status: StatusInterface | null}>) => {
+        updateStatus: (state:Manager, action: PayloadAction<{status: StatusInterface | null}>) => {
             const index = state.statuses.findIndex(obj => obj.id === action.payload.status.id);
             if (index !== -1) {
                 state.statuses[index] = { ...state.statuses[index], ...action.payload.status };
             }
         },
-        removeStatus: (state, action: PayloadAction<{statusId: number | null}>) => {
+        removeStatus: (state:Manager, action: PayloadAction<{statusId: number | null}>) => {
             state.statuses = state.statuses.filter(t=>t.id !== action.payload.statusId)
         },
     }
 })
 
 export default managerSlice.reducer;
-export const { setTickets, addTicket, removeTicket, removeStatus, addStatus, updateStatus, setStatuses, } = managerSlice.actions;
+export const { setTickets, addTicket, removeTicket, removeStatus, addStatus, updateStatus, setStatuses, addGPTResponse } = managerSlice.actions;
