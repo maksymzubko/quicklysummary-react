@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 
 const agent = axios.create({
     baseURL: process.env.VITE_API_QUICKLY
@@ -36,17 +36,21 @@ agent.interceptors.response.use(
         if (error.response.status === 401 && storageItem) {
             if (!originalRequest._retry) {
                 const jsonItem = JSON.parse(storageItem);
-                const response = await agent.post('/auth/refresh', {token: jsonItem.access_token})
+                let response: AxiosResponse<any, any>;
+
+                try {
+                    response = await agent.post('/auth/refresh', {token: jsonItem.access_token})
+                } catch (e) {
+                    localStorage.removeItem('quickly_summary_token')
+                }
 
                 if (response.status === 200 || response.status === 201) {
                     localStorage.setItem('quickly_summary_token', JSON.stringify(response.data));
                     originalRequest.headers.Authorization = `Bearer ${response.data.access_token}`;
                     return agent.request(originalRequest);
-                }
-                else
+                } else
                     localStorage.removeItem('quickly_summary_token')
-            }
-            else
+            } else
                 localStorage.removeItem('quickly_summary_token')
         }
         return Promise.reject(error);

@@ -2,6 +2,7 @@ import  {useState} from 'react';
 import {Box} from "@mui/material";
 import cl from './style.module.css'
 import X from "../Header/assets/x.svg";
+import {Languages} from "../../api/user/types";
 
 export enum AnimationSides {
     left="left",
@@ -9,9 +10,9 @@ export enum AnimationSides {
 }
 
 export interface SelectorData {
-    data: string[];
+    data: Languages[];
     animationSide: AnimationSides;
-    onChangeValue: () => void;
+    onChangeValue: (lang: Languages) => void;
     theme?: "white" | "black";
 }
 
@@ -19,9 +20,10 @@ const CustomSelector = (data: SelectorData) => {
     const [selected, setSelected] = useState(data.data[0])
     const [opened, setOpened] = useState(false)
 
-    const select = (newContent: string) => {
+    const select = (newContent: Languages) => {
         setSelected(newContent)
         setOpened(false)
+        data.onChangeValue(newContent);
     }
 
     return (
@@ -32,7 +34,7 @@ const CustomSelector = (data: SelectorData) => {
                     .map(c =>
                         {
                             if(c!=='x')
-                                return <Box key={c} onClick={() => select(c)} className={cl.content}>{c}</Box>
+                                return <Box key={c} onClick={() => select(Languages[c as Languages])} className={cl.content}>{c}</Box>
                             else
                                 return <Box key={c} onClick={() => setOpened(false)}><img src={X} alt={'x'}/></Box>
                         }

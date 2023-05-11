@@ -11,7 +11,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <Provider store={store}>
-        <SnackbarProvider maxSnack={1} hideIconVariant={true} action={(key) => (<IconButton onClick={()=>closeSnackbar(key)}><CancelIcon sx={{fill:'white'}}/></IconButton>)}>
+        <SnackbarProvider maxSnack={3} hideIconVariant={true} action={(key) => (<IconButton onClick={()=>closeSnackbar(key)}><CancelIcon sx={{fill:'white'}}/></IconButton>)}>
             <BrowserRouter>
                 <ThemeProvider theme={defaultTheme}>
                     <App/>

@@ -37,6 +37,7 @@ const CustomButton = (data: ButtonData) => {
             onClick={data.onClick} className={
             [
                 cl.container,
+                data.loading ? cl.disabled : '',
                 data.disabled ? cl.disabled : '',
                 data?.icon_data?.position === 'end' ? cl.end_icon : ""
             ].join(' ')}>
