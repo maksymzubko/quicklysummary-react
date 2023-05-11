@@ -31,7 +31,7 @@ img{
 
 .quickly{
     color: white;
-    -webkit-text-stroke: 5px #1A191D;
+    -webkit-text-stroke: 4px #1A191D;
 }
 
 .quickly::before {

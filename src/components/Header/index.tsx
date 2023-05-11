@@ -9,34 +9,16 @@ import {SelectIsAuthorized} from "../../redux/store/user/selector";
 import {useLocation, useNavigate} from "react-router-dom";
 import {links} from "../../router";
 import authApi from "../../api/auth/auth.api";
-import {setAuthorized} from "../../redux/store/user/slice";
+import {setAuthorized, setUser} from "../../redux/store/user/slice";
 import LoadContext from "../../contexts/loadContext";
 import userApi from "../../api/user/user.api";
-import HeaderDropDown from "../HeaderDropDown";
+import HeaderDropDown from "../HeaderDropDown/index";
 const languageList = ['en', 'jp', 'ua', 'ru']
 
 const Header = () => {
     const isAuthorized = useSelector(SelectIsAuthorized)
     const location = useLocation()
     const navigate = useNavigate()
-    const dispatch = useDispatch();
-    const { setLoaded } = useContext(LoadContext);
-
-    useEffect(() => {
-        const token = localStorage.getItem('quickly_summary_token');
-        if (token) {
-            authApi.verifyToken()
-                .then(() => {
-                    dispatch(setAuthorized({isAuthorized: true}))
-                    userApi.getTickets().then().catch()
-                    setLoaded(true)
-                }).catch(() => {
-                dispatch(setAuthorized({isAuthorized: false}))
-                setLoaded(true)
-            })
-        }
-        else setLoaded(true)
-    }, [])
 
     const isShow = useCallback(() => {
         return !isAuthorized && !location.pathname.includes('auth')

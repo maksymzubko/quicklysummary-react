@@ -34,7 +34,7 @@
     filter: invert();
     display: flex;
     align-self: center;
-    width: 20px;
+    width: 14px;
 }
 
 .content, .current_content{
@@ -42,8 +42,16 @@
     transition: outline 0.3s ease-in-out;
 }
 
-.content:hover, .current_content:hover{
+.select.white .content:hover, .select.white .current_content:hover{
     outline: white solid 1px;
+}
+
+.select.black .content:hover, .select.black .current_content:hover{
+    outline: black solid 1px;
+}
+
+.select.black .others_content img{
+    filter: invert(0%);
 }
 
 .others_content div:hover{
@@ -59,9 +67,16 @@
     border-radius: 50%;
 }
 
-.show_list .current_content {
-    cursor: default;
+.select.black.show_list .current_content{
+    outline: 1px solid black;
+}
+
+.select.white.show_list .current_content{
     outline: 1px solid white;
+}
+
+.select.show_list .current_content {
+    cursor: default;
     opacity: .5;
     pointer-events: none;
 }

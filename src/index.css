@@ -38,7 +38,7 @@ ol {
 }
 
 body {
-    font-family: Manrope, sans-serif;
+    font-family: "Nunito Sans", sans-serif;
     font-size: 16px;
     line-height: 1.4;
 }
@@ -52,6 +52,12 @@ img,
 video {
     max-width: 100%;
     height: auto;
+}
+
+html, body{
+    height: 100vh;
+    margin: 0;
+    padding: 0;
 }
 
 input,
@@ -102,39 +108,41 @@ img {
     font-weight: 700;
 }
 
-@font-face {
-    font-family: Nunito Sans;
-    src: url('./assets/fonts/NunitoSans_7pt_Condensed-Regular.ttf');
-    font-weight: 400;
-}
+/*@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700&display=swap');*/
 
-@font-face {
-    font-family: Nunito Sans;
-    src: url('./assets/fonts/NunitoSans_7pt_Condensed-Medium.ttf');
-    font-weight: 500;
-}
+/*@font-face {*/
+/*    font-family: Nunito Sans;*/
+/*    src: url('./assets/fonts/NunitoSans_7pt_Condensed-Regular.ttf');*/
+/*    font-weight: 400;*/
+/*}*/
 
-@font-face {
-    font-family: Nunito Sans;
-    src: url('./assets/fonts/NunitoSans_7pt_Condensed-SemiBold.ttf');
-    font-weight: 600;
-}
+/*@font-face {*/
+/*    font-family: Nunito Sans;*/
+/*    src: url('./assets/fonts/NunitoSans_7pt_Condensed-Medium.ttf');*/
+/*    font-weight: 500;*/
+/*}*/
 
-@font-face {
-    font-family: Nunito Sans;
-    src: url('./assets/fonts/NunitoSans_7pt_Condensed-Bold.ttf');
-    font-weight: 700;
-}
+/*@font-face {*/
+/*    font-family: Nunito Sans;*/
+/*    src: url('./assets/fonts/NunitoSans_10pt_Condensed-SemiBold.ttf');*/
+/*    font-weight: 600;*/
+/*}*/
 
-@font-face {
-    font-family: Nunito Sans;
-    src: url('./assets/fonts/NunitoSans_7pt_Condensed-ExtraBold.ttf');
-    font-weight: 800;
-}
+/*@font-face {*/
+/*    font-family: Nunito Sans;*/
+/*    src: url('./assets/fonts/NunitoSans_7pt_Condensed-Bold.ttf');*/
+/*    font-weight: 700;*/
+/*}*/
 
-@font-face {
-    font-family: Nunito Sans;
-    src: url('./assets/fonts/NunitoSans_7pt_Condensed-ExtraBoldItalic.ttf');
-    font-weight: 800;
-    font-style: italic;
-}
+/*@font-face {*/
+/*    font-family: Nunito Sans;*/
+/*    src: url('./assets/fonts/NunitoSans_7pt_Condensed-ExtraBold.ttf');*/
+/*    font-weight: 800;*/
+/*}*/
+
+/*@font-face {*/
+/*    font-family: Nunito Sans;*/
+/*    src: url('./assets/fonts/NunitoSans_7pt_Condensed-ExtraBoldItalic.ttf');*/
+/*    font-weight: 800;*/
+/*    font-style: italic;*/
+/*}*/

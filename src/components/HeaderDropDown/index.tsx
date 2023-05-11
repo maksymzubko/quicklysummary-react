@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Avatar, Box, Divider, Typography} from "@mui/material";
 import cl from './style.module.css'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
@@ -8,7 +8,7 @@ import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlin
 import {useDispatch, useSelector} from "react-redux";
 import {SelectUser} from "../../redux/store/user/selector";
 import {setAuthorized, setUser} from "../../redux/store/user/slice";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {links} from "../../router";
 
 const HeaderDropDown = () => {
@@ -16,6 +16,11 @@ const HeaderDropDown = () => {
     const userData = useSelector(SelectUser);
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const location = useLocation()
+
+    useEffect(() => {
+        setShow(false)
+    }, [location])
 
     const logOut = () => {
         localStorage.removeItem('quickly_summary_token')
@@ -31,12 +36,12 @@ const HeaderDropDown = () => {
             <Box onClick={() => setShow(!show)} className={cl.click_item}>
                 <Avatar/>
             </Box>
-            <Box className={[cl.dropdown_container, show ? cl.show : ''].join(' ')}>
+            <Box className={[cl.dropdown_container, show ? cl.show : cl.hide].join(' ')}>
                 <Box className={cl.header}>
                     <Avatar/>
                     <Box className={cl.info}>
-                        <Typography className={cl.name}>{userData?.uuid}</Typography>
-                        <Typography className={cl.email}>{userData?.email}</Typography>
+                        <Typography className={cl.name}>{userData?.uuid ?? "Incorrect UID"}</Typography>
+                        <Typography className={cl.email}>{userData?.email ?? "Incorrect email"}</Typography>
                     </Box>
                 </Box>
                 <Box onClick={()=>setShow(false)} className={cl.content}>

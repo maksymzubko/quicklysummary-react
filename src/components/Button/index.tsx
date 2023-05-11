@@ -17,6 +17,7 @@ export interface ButtonData {
     icon_data?: {
         icon: any;
         needRevert?: boolean;
+        position?: "start" | "end";
     };
     loading?: boolean;
     disabled?: boolean;
@@ -33,7 +34,12 @@ const CustomButton = (data: ButtonData) => {
                 "--data-outline": data.args?.data_outline ?? "white",
                 "--data-outlinehover": data.args?.data_outline_hover ?? "none",
             }}
-            onClick={data.onClick} className={[cl.container, data.disabled ? cl.disabled : ''].join(' ')}>
+            onClick={data.onClick} className={
+            [
+                cl.container,
+                data.disabled ? cl.disabled : '',
+                data?.icon_data?.position === 'end' ? cl.end_icon : ""
+            ].join(' ')}>
             {data.loading && <CircularProgress sx={{height: '16px !important', width: '16px !important'}}/>}
             {!data.loading && <>
                 {data.icon_data &&

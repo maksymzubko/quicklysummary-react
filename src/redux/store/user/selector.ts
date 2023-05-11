@@ -13,5 +13,5 @@ export const SelectUser = createSelector(
 
 export const SelectIsAuthorized = createSelector(
     [selectDomain],
-    (socketState: UserState) => socketState.isAuthorized,
+    (userState: UserState) => userState.isAuthorized,
 );

@@ -9,8 +9,8 @@ class AuthApi {
         );
 
         if (response.status === 200 || response.status === 201) {
-            const {id, email, access_token } = response.data;
-            localStorage.setItem('quickly_summary_token', JSON.stringify({id, email, access_token, isCustom: false}))
+            const {id, email, access_token, uuid } = response.data;
+            localStorage.setItem('quickly_summary_token', JSON.stringify({id, email, access_token, uuid, isCustom: false}))
             return response.data;
         }
 
@@ -36,8 +36,8 @@ class AuthApi {
         );
 
         if (response.status === 200 || response.status === 201) {
-            const {id, email, access_token } = response.data;
-            localStorage.setItem('quickly_summary_token', JSON.stringify({id, email, access_token, isCustom: true}))
+            const {id, email, access_token, uuid } = response.data;
+            localStorage.setItem('quickly_summary_token', JSON.stringify({id, email, access_token, uuid, isCustom: true}))
             return response.data;
         }
 

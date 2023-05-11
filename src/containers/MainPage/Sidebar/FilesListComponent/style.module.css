@@ -1,0 +1,14 @@
+.container{
+    height: calc(100% - 32px);
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 15px;
+
+    overflow: visible auto;
+    scrollbar-width: thin;
+
+    padding-right: 5px;
+}
