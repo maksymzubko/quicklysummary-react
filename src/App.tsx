@@ -7,12 +7,16 @@ import LoadContext from "./contexts/loadContext";
 import React, {Suspense, useEffect, useState} from "react";
 import cl from "./layouts/LoadLayout/style.module.css";
 import {Box, LinearProgress, Typography} from "@mui/material";
+import authApi from "./api/auth/auth.api";
+import {setAuthorized, setUser} from "./redux/store/user/slice";
 
 
 function App() {
     const isAuthorized = useSelector(SelectIsAuthorized)
     const routes = useRoutes(isAuthorized ? r.authorized : r["not-authorized"]);
     const [loaded, setLoaded] = useState(false)
+    const dispatch = useDispatch();
+
     useEffect(() => {
         if (!loaded) {
             const timer = setTimeout(() => {
@@ -22,6 +26,23 @@ function App() {
             return () => clearTimeout(timer);
         }
     }, [loaded]);
+
+    useEffect(() => {
+        const token = localStorage.getItem('quickly_summary_token');
+        if (token) {
+            authApi.verifyToken()
+                .then(() => {
+                    dispatch(setAuthorized({isAuthorized: true}))
+                    dispatch(setUser({user: JSON.parse(token)}))
+                    setLoaded(true)
+                }).catch(() => {
+                dispatch(setAuthorized({isAuthorized: false}))
+                dispatch(setUser({user: null}))
+                setLoaded(true)
+            })
+        }
+        else setLoaded(true)
+    }, [])
 
     return (
         <>

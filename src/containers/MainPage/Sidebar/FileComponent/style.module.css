@@ -1,0 +1,41 @@
+.container{
+    /*position: relative;*/
+    border-radius: 100px;
+    background: none;
+    width: 100%;
+    padding: 10px 10px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: border .4s ease-in-out;
+}
+
+.container:hover{
+    border: #1A191D 1px solid;
+    /*margin: -1px;*/
+}
+
+.content{
+    user-select: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 14px;
+    /*max-width: 350px;*/
+}
+
+.selected{
+    transition: all .4s ease-in-out;
+    background: linear-gradient(75deg, #A18CD1 9.18%, #FBC2EB 90.82%);
+}
+
+.icons{
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(-50%, -50%);
+}

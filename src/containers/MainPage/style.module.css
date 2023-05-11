@@ -1,0 +1,155 @@
+.container{
+    position: relative;
+    padding: 2% 6% 1% 6% ;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    height: calc(100vh - var(--header-height));
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    max-width: 70%;
+    height: 100%;
+}
+
+.left_side{
+    display: flex;
+    align-items: center;
+
+    gap: 30px;
+}
+
+.text_reader{
+    display: flex;
+    flex-direction: column;
+    /*height: 50%;*/
+}
+
+.reader_actions{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.buttons{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.text_content{
+
+}
+
+.drag_container{
+    height: calc(100% - 34px);
+}
+
+.gpt_context, .text_reader{
+    max-height: 80%;
+    min-height: 15%;
+}
+
+.gpt_context, .top_content{
+    /*height: 50%;*/
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.gpt_buttons{
+    display: flex;
+    align-items: stretch;
+    gap: 20px;
+    min-height: 32px;
+
+    box-sizing: border-box;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.gpt_button{
+    /*flex: 0 1;*/
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    padding: 12px 48px;
+    border: 1px solid transparent;
+    border-radius: 100px;
+    text-align: center;
+    white-space: nowrap;
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+
+    width: 151px;
+}
+
+.gpt_button:hover{
+    border: 1px solid #1A191D;
+}
+
+.gpt_button.active{
+    background: linear-gradient(75deg, #A18CD1 9.18%, #FBC2EB 90.82%);
+}
+
+.gpt_text{
+    flex: 1 1;
+    height: 100%;
+    overflow: auto;
+    scrollbar-width: thin;
+    width: 100%;
+}
+
+.divider{
+    height: 2px;
+    background: #1A191D;
+    margin: 16px 0;
+    width: 100%;
+}
+
+.top_content{
+    height: 100%;
+}
+
+.gpt_buttons_bottom{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.gpt_buttons_bottom .left{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/*disabled*/
+.disabled{
+    user-select: none;
+    pointer-events: none;
+}
+
+.disabled path{
+    opacity: .5;
+}
+
+.disabled .scale{
+    color: gray;
+}
+
+.disabled .gpt_button{
+    color: gray;
+}

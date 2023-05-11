@@ -12,6 +12,7 @@ export interface SelectorData {
     data: string[];
     animationSide: AnimationSides;
     onChangeValue: () => void;
+    theme?: "white" | "black";
 }
 
 const CustomSelector = (data: SelectorData) => {
@@ -24,7 +25,7 @@ const CustomSelector = (data: SelectorData) => {
     }
 
     return (
-        <Box className={[cl.select, opened ? cl.show_list : cl.hide_list, cl[data.animationSide]].join(' ')}>
+        <Box className={[cl.select, opened ? cl.show_list : cl.hide_list, cl[data.animationSide], data.theme ? cl[data.theme] : cl.white].join(' ')}>
             <Box className={cl.others_content}>
                 {['x', ...data.data
                     .filter(c => c !== selected)]

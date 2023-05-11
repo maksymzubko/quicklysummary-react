@@ -5,6 +5,9 @@ const defaultTheme = createTheme({
     typography: {
         fontFamily: 'Nunito Sans, sans-serif',
     },
+    palette:{
+        primary: {main: "#1A191D"}
+    }
 });
 
 export default defaultTheme;

@@ -38,3 +38,7 @@
 .container:hover img.need_revert{
     filter: invert();
 }
+
+.container.end_icon {
+    flex-flow: row-reverse;
+}
