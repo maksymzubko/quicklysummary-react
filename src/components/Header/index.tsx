@@ -8,12 +8,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {SelectIsAuthorized} from "../../redux/store/user/selector";
 import {useLocation, useNavigate} from "react-router-dom";
 import {links} from "../../router";
-import authApi from "../../api/auth/auth.api";
-import {setAuthorized, setUser} from "../../redux/store/user/slice";
-import LoadContext from "../../contexts/loadContext";
-import userApi from "../../api/user/user.api";
 import HeaderDropDown from "../HeaderDropDown/index";
-const languageList = ['en', 'jp', 'ua', 'ru']
+import {Languages} from "../../api/user/types";
+const languageList = ['en', 'jp', 'ua', 'ru'] as Languages[]
 
 const Header = () => {
     const isAuthorized = useSelector(SelectIsAuthorized)

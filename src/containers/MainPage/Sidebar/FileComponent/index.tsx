@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {KeyboardEventHandler, useCallback, useEffect, useState} from 'react';
 import {Box, CircularProgress, IconButton, Input, SvgIcon} from "@mui/material";
 import cl from './style.module.css'
 import CustomButton from "../../../../components/Button";
@@ -79,13 +79,14 @@ const FileComponent = (data: FileInterface) => {
     const dispatch = useDispatch()
     const {enqueueSnackbar, closeSnackbar} = useSnackbar();
 
-    const handleChangeValue = (e) => {
-        console.log(e.target.value)
+    //@ts-ignore
+    const handleChangeValue = (e: any) => {
         if (currentValue.length <= maxLength || e.target.value.length < currentValue.length)
             setCurrentValue(e.target.value);
     }
 
-    const handleKeyDown = (e) => {
+    //@ts-ignore
+    const handleKeyDown = (e: any) => {
         if (e.code === "Escape") cancelEdit()
         if (e.code === "Enter") confirmEdit()
     }
