@@ -7,6 +7,11 @@
     cursor: pointer;
     border: 1px solid transparent;
     transition: border .4s ease-in-out;
+
+    display: flex;
+    align-items: center;
+    /*place-content: center;*/
+    max-height: 42px;
 }
 
 .container:hover{
@@ -15,7 +20,17 @@
 }
 
 .content{
-    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    /*max-width: 350px;*/
+}
+
+.text{
+    flex: 1 0 auto;
+    /*user-select: none;*/
+    max-width: 95%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -24,18 +39,38 @@
     font-weight: 600;
     font-size: 12px;
     line-height: 14px;
-    /*max-width: 350px;*/
+}
+
+.selected .text{
+    max-width: 85%;
+}
+
+.selected input{
+    width: 100%;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    height: 14px;
 }
 
 .selected{
     transition: all .4s ease-in-out;
     background: linear-gradient(75deg, #A18CD1 9.18%, #FBC2EB 90.82%);
+    background-clip: padding-box;
+}
+
+.selected .icons{
+    display: flex;
+    align-items: center;
+    flex: 0 1 auto;
+    gap: 10px;
+    /*display: none;*/
+    /*position: absolute;*/
+    /*top: 50%;*/
+    /*left: 0;*/
+    /*transform: translate(-50%, -50%);*/
 }
 
 .icons{
     display: none;
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translate(-50%, -50%);
 }

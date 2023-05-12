@@ -43,6 +43,12 @@ const managerSlice = createSlice({
                 state.statuses[index] = { ...state.statuses[index], ...action.payload.status };
             }
         },
+        updateTicketName: (state:Manager, action: PayloadAction<{id: number, name: string | null}>) => {
+            const index = state.tickets.findIndex(obj => obj.ticketId === action.payload.id);
+            if (index !== -1) {
+                state.tickets[index] = { ...state.tickets[index], ticketName: action.payload.name };
+            }
+        },
         removeStatus: (state:Manager, action: PayloadAction<{statusId: number | null}>) => {
             state.statuses = state.statuses.filter(t=>t.id !== action.payload.statusId)
         },
@@ -50,4 +56,4 @@ const managerSlice = createSlice({
 })
 
 export default managerSlice.reducer;
-export const { setTickets, addTicket, removeTicket, removeStatus, addStatus, updateStatus, setStatuses, addGPTResponse } = managerSlice.actions;
+export const { setTickets, addTicket, removeTicket, removeStatus, addStatus, updateStatus, setStatuses, addGPTResponse, updateTicketName } = managerSlice.actions;

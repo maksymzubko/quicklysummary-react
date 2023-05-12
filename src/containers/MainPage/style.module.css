@@ -102,6 +102,7 @@
 
 .gpt_button.active{
     background: linear-gradient(75deg, #A18CD1 9.18%, #FBC2EB 90.82%);
+    background-clip: padding-box;
 }
 
 .gpt_text{

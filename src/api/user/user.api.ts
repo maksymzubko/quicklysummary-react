@@ -55,6 +55,31 @@ class UserApi {
         return undefined;
     }
 
+    async deleteTicket(id: number): Promise<boolean> {
+        const response: AxiosResponse = await agent.delete(
+            `user/ticket/${id}`,
+        );
+
+        if (response.status === 200 || response.status === 201) {
+            return response.data;
+        }
+
+        return undefined;
+    }
+
+    async renameTicket(id: number, name: string): Promise<boolean> {
+        const response: AxiosResponse = await agent.post(
+            `user/rename-ticket/${id}`,
+            {name}
+        );
+
+        if (response.status === 200 || response.status === 201) {
+            return response.data;
+        }
+
+        return undefined;
+    }
+
 }
 
 const userApi = new UserApi();

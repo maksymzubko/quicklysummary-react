@@ -15,10 +15,11 @@ import {addGPTResponse, addStatus, addTicket, setTickets, updateStatus} from "..
 import {GptRequest, Languages, TypeResponse} from "../../api/user/types";
 import {v4 as uuidv4} from "uuid";
 import {AlertType} from "react-mui-dropzone";
-import {SnackbarKey} from "notistack";
+import {SnackbarKey, useSnackbar} from "notistack";
 import { jsPDF } from "jspdf";
 
 const MainPage = () => {
+    const {enqueueSnackbar, closeSnackbar} = useSnackbar();
     const tickets = useSelector(SelectTickets)
     const statuses = useSelector(SelectStatuses)
     const dispatch = useDispatch()
@@ -143,7 +144,7 @@ const MainPage = () => {
             return true;
 
         return false;
-    }, [selectedTicket, selectedGpt])
+    }, [selectedTicket, selectedGpt, tickets])
 
     const loadingStart = useCallback(() => {
         return loadingList.includes(selectedGpt)

@@ -66,7 +66,7 @@ const Sidebar = (data: SidebarProps) => {
                     dropzoneText={""}
                     acceptedFiles={['.txt', '.mp3', '.mp4']}
                     filesLimit={1}
-                    maxFileSize={50000}
+                    maxFileSize={500000}
                     Icon={DropIcon}
                     classes={{text: cl.text, root: cl.drop_field_root, textContainer: cl.text_container}}
                 />
