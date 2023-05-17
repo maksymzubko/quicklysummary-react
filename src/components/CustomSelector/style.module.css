@@ -101,12 +101,20 @@
     transform: translateX(100%);
 }
 
-.right.hide_list .others_content div{
+.select:is([data-dont-animate="0"]).right.hide_list .others_content div{
     animation: slide-out-reverse 0.5s ease-out forwards;
 }
 
-.left.hide_list .others_content div{
+.select:is([data-dont-animate="1"]).right.hide_list .others_content div{
+    animation: slide-out-reverse 0s ease-out forwards;
+}
+
+.select:is([data-dont-animate="0"]).left.hide_list .others_content div{
     animation: slide-out 0.5s ease-out forwards;
+}
+
+.select:is([data-dont-animate="1"]).left.hide_list .others_content div{
+    animation: slide-out 0s ease-out forwards;
 }
 
 .show_list .others_content div:nth-child(1),

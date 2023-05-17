@@ -1,4 +1,4 @@
-import  {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Box} from "@mui/material";
 import cl from './style.module.css'
 import X from "../Header/assets/x.svg";
@@ -26,8 +26,14 @@ const CustomSelector = (data: SelectorData) => {
         data.onChangeValue(newContent);
     }
 
+    useEffect(() => {
+        setTimeout(() => {
+            document.querySelector(`.${cl.select}`).setAttribute("data-dont-animate", "0");
+        }, 500)
+    }, [])
+
     return (
-        <Box className={[cl.select, opened ? cl.show_list : cl.hide_list, cl[data.animationSide], data.theme ? cl[data.theme] : cl.white].join(' ')}>
+        <Box data-dont-animate={1} className={[cl.select, opened ? cl.show_list : cl.hide_list, cl[data.animationSide], data.theme ? cl[data.theme] : cl.white].join(' ')}>
             <Box className={cl.others_content}>
                 {['x', ...data.data
                     .filter(c => c !== selected)]

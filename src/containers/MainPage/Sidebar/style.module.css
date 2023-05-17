@@ -80,6 +80,7 @@
 }
 
 .coins{
+    visibility: hidden;
     min-height: 32px;
     flex: 0 1 auto;
     width: 100%;
@@ -128,4 +129,16 @@
     line-height: 16px;
     text-align: center;
     margin-bottom: 16px;
+}
+
+@media screen and (max-width: 1400px){
+    .container{
+        max-width: 25%;
+    }
+}
+
+@media screen and (max-width: 800px){
+    .container{
+        max-width: 30%;
+    }
 }

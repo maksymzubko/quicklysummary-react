@@ -16,7 +16,7 @@
     /*align-items: center;*/
     justify-content: center;
     gap: 10px;
-
+    min-width: 350px;
     height: calc(60vh - var(--header-height));
     padding: 48px;
     width: 20vw;

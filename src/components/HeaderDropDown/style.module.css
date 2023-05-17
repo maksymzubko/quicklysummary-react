@@ -86,8 +86,12 @@
     max-width: 150px;
 }
 
-.dropdown_container.hide{
+.dropdown_container.hide:is([data-dont-animate="0"]) {
     animation: fade_out .5s ease-in-out forwards;
+}
+
+.dropdown_container.hide:is([data-dont-animate="1"]) {
+    animation: fade_out 0s ease-in-out forwards;
 }
 
 .dropdown_container.show{

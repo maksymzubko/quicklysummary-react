@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
 import {Box, Divider, IconButton, SvgIcon} from "@mui/material";
 import cl from './style.module.css'
 import Sidebar from "./Sidebar/index";
@@ -11,12 +11,23 @@ import CustomSelector, {AnimationSides} from "../../components/CustomSelector";
 import {useDispatch, useSelector} from "react-redux";
 import {SelectStatuses, SelectTickets} from "../../redux/store/manager/selector";
 import userApi from "../../api/user/user.api";
-import {addGPTResponse, addStatus, addTicket, setTickets, updateStatus} from "../../redux/store/manager/slice";
+import {
+    addGPTResponse,
+    addOrUpdateGptResponse,
+    addStatus,
+    addTicket,
+    setTickets,
+    updateStatus
+} from "../../redux/store/manager/slice";
 import {GptRequest, Languages, TypeResponse} from "../../api/user/types";
 import {v4 as uuidv4} from "uuid";
 import {AlertType} from "react-mui-dropzone";
 import {SnackbarKey, useSnackbar} from "notistack";
-import { jsPDF } from "jspdf";
+import {jsPDF} from "jspdf";
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import HeaderContext from "../../contexts/headerContext";
+import CustomPrompt from "../../components/CustomPromt";
 
 const MainPage = () => {
     const {enqueueSnackbar, closeSnackbar} = useSnackbar();
@@ -24,12 +35,19 @@ const MainPage = () => {
     const statuses = useSelector(SelectStatuses)
     const dispatch = useDispatch()
 
+    const [promptText, setPromptText] = useState("")
+    const {promptOpened, setPromptOpened} = useContext(HeaderContext)
     const [gptLanguage, setGptLanguage] = useState<Languages>(Languages.en)
     const [selectedTicket, setSelectedTicket] = useState(null)
     const [scale, setScale] = useState(100)
     const [selectedGpt, setSelectedGpt] = useState(null)
     const [types, setTypes] = useState<TypeResponse[]>([])
     const [loadingList, setLoadingList] = useState([])
+
+    const containerRef = useRef<HTMLDivElement>(null);
+    const leftRef = useRef(null);
+    const rightRef = useRef(null);
+
 
     useEffect(() => {
         userApi.getTickets()
@@ -67,7 +85,45 @@ const MainPage = () => {
 
     const changeActiveGpt = (id: number) => {
         setSelectedGpt(id)
+        if(id === 6)
+        {
+            setPromptOpened(true)
+        }
     }
+
+    const scrollLeft = () => {
+        if (containerRef.current) {
+            if(rightRef.current)
+                    rightRef.current.style.display = "flex"
+            if(leftRef.current)
+            {
+                if(containerRef.current.scrollLeft - 100 <= 0)
+                    leftRef.current.style.display = "none"
+                else
+                    leftRef.current.style.display = "flex"
+            }
+
+            containerRef.current.scrollLeft -= 100; // Adjust the scroll distance as needed
+        }
+    };
+
+    const scrollRight = () => {
+        if (containerRef.current) {
+            if(rightRef.current)
+            {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                //@ts-ignore
+                if(containerRef.current?.scrollLeftMax - (containerRef.current.scrollLeft + 100) <= 0)
+                    rightRef.current.style.display = "none"
+                else
+                    rightRef.current.style.display = "flex"
+            }
+            if(leftRef.current)
+                leftRef.current.style.display = "flex"
+
+            containerRef.current.scrollLeft += 100; // Adjust the scroll distance as needed
+        }
+    };
 
     const onChangeTicket = (id: number) => {
         setSelectedGpt(types[0].id);
@@ -79,7 +135,6 @@ const MainPage = () => {
     }, [selectedTicket, tickets])
 
     const gptText = useCallback(() => {
-        console.log(tickets, selectedTicket, selectedGpt)
         return tickets.find(i => i.ticketId === selectedTicket)
             ?.gptFiles.find(g => g.reqId === selectedGpt)?.content;
     }, [selectedTicket, selectedGpt, tickets])
@@ -93,39 +148,45 @@ const MainPage = () => {
         const ticketName = tickets.find(i => i.ticketId === selectedTicket)
             ?.ticketName;
         const selected = selectedGpt;
-        const selectedType = types.find(t=>t.id === selected);
+        const selectedType = types.find(t => t.id === selected);
         const name = `${ticketName}[${selectedType.name}]`;
 
-        const list = selected === 2 ? [1,2] : [selected]
-        setLoadingList(prev=>[...prev, ...list]);
+        const list = selected === 2 ? [1, 2] : [selected]
+        setLoadingList(prev => [...prev, ...list]);
 
         dispatch(addStatus({status: {id: id, name, status: "In process"}}))
 
-        const data = {reqId: selected, lang: Languages[gptLanguage], message: selectedType.message[gptLanguage], ticketId: selectedTicket} as GptRequest;
+        const data = {
+            reqId: selected,
+            lang: Languages[gptLanguage],
+            message: selected !== 6 ? selectedType.message[gptLanguage] : `${promptText}\n\n<<SUMMARY>>`,
+            ticketId: selectedTicket
+        } as GptRequest;
 
-        userApi.sendRequest(data).then(res=>{
-            dispatch(addGPTResponse({id: selectedTicket, gpt: res}))
+        userApi.sendRequest(data).then(res => {
+            dispatch(addOrUpdateGptResponse({id: selectedTicket, gpt: res}))
             dispatch(updateStatus({status: {id: id, name, status: "Done"}}))
-        }).catch(err=>{
+        }).catch(err => {
             onAlert(err?.response?.data?.message[0], "error")
             dispatch(updateStatus({status: {id: id, name, status: "Error"}}))
-        }).finally(()=>setLoadingList(prev=>[...prev.filter(p=>!list.includes(p))]))
+        }).finally(() => setLoadingList(prev => [...prev.filter(p => !list.includes(p))]))
     }
 
     const onAlert = (message: string, variant: AlertType) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
         const key: SnackbarKey = enqueueSnackbar(message, {variant: variant, onClick: () => closeSnackbar(key)})
     }
 
     const downloadPDF = (initialText = false) => {
         const doc = new jsPDF();
-        const ticket = tickets.find(t=>t.ticketId === selectedTicket);
-        const gpt = ticket.gptFiles.find(g=>g.reqId === selectedGpt);
+        const ticket = tickets.find(t => t.ticketId === selectedTicket);
+        const gpt = ticket.gptFiles.find(g => g.reqId === selectedGpt);
         // const text = initialText ? document.getElementById("initial_text_content").innerText : document.getElementById("gpt_text_content").innerText;
         const text = initialText ? ticket.ticketFileText : gpt.content;
 
         doc.text(text, 10, 10, {maxWidth: 200});
-        const selectedType = types.find(t=>t.id === selectedGpt);
+        const selectedType = types.find(t => t.id === selectedGpt);
         const ticketName = ticket.ticketName.replace(".txt", "");
         const name = `${initialText ? ticketName : `${ticketName}[${selectedType.name}]`}.pdf`
 
@@ -133,7 +194,7 @@ const MainPage = () => {
     }
 
     const disabledStart = useCallback(() => {
-        if(selectedGpt === 6) return true;
+        if (selectedGpt === 6) return promptText.length < 4;
 
         const text = tickets.find(i => i.ticketId === selectedTicket)
             ?.gptFiles.find(g => g.reqId === selectedGpt)?.content;
@@ -144,14 +205,19 @@ const MainPage = () => {
             return true;
 
         return false;
-    }, [selectedTicket, selectedGpt, tickets])
+    }, [selectedTicket, selectedGpt, tickets, promptText])
 
     const loadingStart = useCallback(() => {
         return loadingList.includes(selectedGpt)
     }, [selectedTicket, selectedGpt, loadingList])
 
+    const handleChangePrompt = (value: string) => {
+        setPromptText(value)
+    }
+
     return (
         <Box className={[cl.container].join(' ')}>
+            <CustomPrompt opened={promptOpened} onClose={()=>setPromptOpened(false)} onChange={handleChangePrompt} value={promptText}/>
             <Sidebar onSelectTicket={onChangeTicket} statuses={statuses} tickets={tickets}/>
             <Box id={"content"} className={[cl.content, !initialText() ? cl.disabled : ''].join(' ')}>
                 <Box style={{height: "50%"}} id={"text"} className={cl.text_reader}>
@@ -191,11 +257,21 @@ const MainPage = () => {
                     </Box>
                 </Box>
                 <Box id={"gpt"} className={cl.gpt_context}>
-                    {/*<Box className={cl.top_content}>*/}
-                    <Box className={cl.gpt_buttons}>
-                        {types.map(t => <Box key={t.id} onClick={() => changeActiveGpt(t.id)}
-                                             className={[cl.gpt_button, selectedGpt === t.id ? cl.active : ""].join(" ")}>{t.name}</Box>)}
+                    <Box className={cl.gpt_buttons_wrapper}>
+                        <Box ref={containerRef} className={cl.gpt_buttons}>
+                            {/*<Box className={cl.arrows}>*/}
+                                <IconButton ref={leftRef} onClick={scrollLeft} className={cl.arrow}>
+                                    <ArrowBackIosNewIcon/>
+                                </IconButton>
+                                <IconButton ref={rightRef} onClick={scrollRight} className={cl.arrow}>
+                                    <ArrowForwardIosIcon/>
+                                </IconButton>
+                            {/*</Box>*/}
+                            {types.map(t => <Box key={t.id} onClick={() => changeActiveGpt(t.id)}
+                                                 className={[cl.gpt_button, selectedGpt === t.id ? cl.active : ""].join(" ")}>{t.name}</Box>)}
+                        </Box>
                     </Box>
+                    {/*<Box className={cl.top_content}>*/}
                     <Box id={"gpt_text_content"} sx={{fontSize: getFontSize()}} className={cl.gpt_text}>
                         {gptText() ??
                             <Box sx={{display: "grid", placeContent: "center", width: "100%", height: "100%"}}>
@@ -207,10 +283,12 @@ const MainPage = () => {
                     <Divider className={cl.divider}/>
                     <Box className={cl.gpt_buttons_bottom}>
                         <Box className={cl.left}>
-                            <PDFButton loading={loadingStart()} disabled={disabledStart()} onClick={sendGPTReq}>Start</PDFButton>
-                            {initialText() && <CustomSelector theme={'black'} data={['en', 'jp', 'ua', 'ru'] as Languages[]}
-                                                              animationSide={AnimationSides.right}
-                                                              onChangeValue={onChangeLanguage}/>}
+                            <PDFButton loading={loadingStart()} disabled={disabledStart()}
+                                       onClick={sendGPTReq}>Start</PDFButton>
+                            {initialText() &&
+                                <CustomSelector theme={'black'} data={['en', 'jp', 'ua', 'ru'] as Languages[]}
+                                                animationSide={AnimationSides.right}
+                                                onChangeValue={onChangeLanguage}/>}
                         </Box>
                         {initialText() && <PDFButton disabled={!gptText()} onClick={() => {
                             downloadPDF(false)
