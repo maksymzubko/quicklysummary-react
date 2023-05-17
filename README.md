@@ -1,7 +1,7 @@
 # QuicklySummary React Application
 
 <p class='container' align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/2300px-React-icon.svg.png" width="200" alt="React Logo" /></a>
+  <a href="https://react.dev/" target="blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/2300px-React-icon.svg.png" width="200" alt="React Logo" /></a>
   <a href="https://github.com/s1maxx" target="blank"><img style="border-radius:50%" src="https://avatars.githubusercontent.com/u/56440333?s=400&u=8f30d5a853a52a9d14044d2cf482de4024f9f37c&v=4" width="200" alt="My account" /></a>
 </p>
 
