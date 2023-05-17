@@ -28,6 +28,19 @@ const managerSlice = createSlice({
                 state.tickets[index].gptFiles = [ ...state.tickets[index].gptFiles, ...action.payload.gpt ];
             }
         },
+        addOrUpdateGptResponse: (state: Manager, action: PayloadAction<{id: number, gpt: GptResponseDto[] | null}>) => {
+            const index = state.tickets.findIndex(obj => obj.ticketId === action.payload.id);
+            if (index !== -1) {
+                action.payload.gpt.map(g=>{
+                    const gptIndex = state.tickets[index].gptFiles.findIndex(obj => obj.reqId === g.reqId);
+                    if(gptIndex !== -1)
+                        state.tickets[index].gptFiles[gptIndex] = g;
+                    else
+                        state.tickets[index].gptFiles = [ ...state.tickets[index].gptFiles, g ];
+                })
+
+            }
+        },
         removeTicket: (state: Manager, action: PayloadAction<{ticketId: number | null}>) => {
             state.tickets = state.tickets.filter(t=>t.ticketId !== action.payload.ticketId)
         },
@@ -56,4 +69,4 @@ const managerSlice = createSlice({
 })
 
 export default managerSlice.reducer;
-export const { setTickets, addTicket, removeTicket, removeStatus, addStatus, updateStatus, setStatuses, addGPTResponse, updateTicketName } = managerSlice.actions;
+export const { setTickets, addTicket, removeTicket, removeStatus, addStatus, updateStatus, setStatuses, addGPTResponse, updateTicketName, addOrUpdateGptResponse } = managerSlice.actions;
