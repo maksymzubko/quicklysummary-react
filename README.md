@@ -6,9 +6,9 @@
 </p>
 
 <p align="center">
-   <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/react?label=react" alt="NPM Version" /></a>
-   <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/vite?label=vite" alt="NPM Version" /></a>
-   <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/typescript?label=typescript" alt="NPM Version" /></a>
+   <a href="https://www.npmjs.com/package/react" target="_blank"><img src="https://img.shields.io/npm/v/react?label=react" alt="NPM Version" /></a>
+   <a href="https://www.npmjs.com/package/vite" target="_blank"><img src="https://img.shields.io/npm/v/vite?label=vite" alt="NPM Version" /></a>
+   <a href="https://www.npmjs.com/package/typescript" target="_blank"><img src="https://img.shields.io/npm/v/typescript?label=typescript" alt="NPM Version" /></a>
 </p>
 <p align='center'>
   <a href="https://t.me/maksimzubko" target="_blank"><img src="https://img.shields.io/static/v1?label=Telegram&style=flat&logo=telegram&message=Follow%20me&color=blue"></a>
