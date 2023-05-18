@@ -7,8 +7,6 @@ export interface StatusesListInterface {
     statuses: StatusInterface[]
 }
 
-
-
 const StatusesListComponent = (data: StatusesListInterface) => {
     return (
         <Box className={cl.container}>

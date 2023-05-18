@@ -10,6 +10,7 @@
     height: 2px;
 
     margin: 16px 0;
+    border-radius: 100px;
 }
 
 .text{
@@ -26,6 +27,7 @@
     background: #1A191D;
     margin: 16px 0;
     position: relative;
+    border-radius: 100px;
 }
 
 .custom_divider .stick{

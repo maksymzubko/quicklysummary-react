@@ -72,7 +72,8 @@
 }
 .gpt_buttons{
     display: flex;
-    align-items: stretch;
+    align-items: center;
+    justify-content: space-between;
     gap: 20px;
 
     box-sizing: border-box;
@@ -104,6 +105,10 @@
     border: 1px solid #1A191D;
 }
 
+.gpt_button.active:hover{
+    border: 1px solid transparent;
+}
+
 .gpt_button.active{
     background: linear-gradient(75deg, #A18CD1 9.18%, #FBC2EB 90.82%);
     background-clip: padding-box;
@@ -122,6 +127,7 @@
     background: #1A191D;
     margin: 16px 0;
     width: 100%;
+    border-radius: 100px;
 }
 
 .top_content{
@@ -149,6 +155,10 @@
 
 .disabled path{
     opacity: .5;
+}
+
+.scale{
+    width: 44px;
 }
 
 .disabled .scale{

@@ -1,7 +1,7 @@
 .container{
     /*position: relative;*/
     border-radius: 100px;
-    background: none;
+    background: #F7F8FA;
     width: 100%;
     padding: 10px 10px;
     cursor: pointer;
@@ -17,6 +17,10 @@
 .container:hover{
     border: #1A191D 1px solid;
     /*margin: -1px;*/
+}
+
+.selected:hover{
+    border: 1px solid transparent;
 }
 
 .content{

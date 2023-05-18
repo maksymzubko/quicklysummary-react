@@ -47,9 +47,9 @@ const AuthPage = () => {
                 <Typography className={cl.login}>{t(messages.login.text1())}</Typography>
                 <Typography className={cl.create_account}>{t(messages.login.text2())}</Typography>
                 <Box className={cl.auth_buttons}>
-                    <AuthButton onClick={googleAuth} icon_data={{icon:GoogleIcon}}>{t(messages.buttons.google())}</AuthButton>
-                    <AuthButton onClick={()=>{}} icon_data={{icon:FacebookIcon}}>{t(messages.buttons.facebook())}</AuthButton>
-                    <AuthButton onClick={()=>{}} icon_data={{icon:AppleIcon, needRevert: true}}>{t(messages.buttons.apple())}</AuthButton>
+                    <AuthButton style={{"& img":{position:"absolute", left:"10%"}}} onClick={googleAuth} icon_data={{icon:GoogleIcon}}>{t(messages.buttons.google())}</AuthButton>
+                    <AuthButton style={{"& img":{position:"absolute", left:"10%"}}} onClick={()=>{}} icon_data={{icon:FacebookIcon}}>{t(messages.buttons.facebook())}</AuthButton>
+                    <AuthButton style={{"& img":{position:"absolute", left:"10%"}}} onClick={()=>{}} icon_data={{icon:AppleIcon, needRevert: true}}>{t(messages.buttons.apple())}</AuthButton>
                 </Box>
                 <Typography className={cl.continue}>{t(messages.login.text3())}</Typography>
                 <TextField value={email} onChange={handleChangeEmail} className={cl.text_field} sx={{font:"'Nunito Sans', sans-serif !important"}} placeholder={"name@example.com"} variant={'standard'}/>

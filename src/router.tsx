@@ -1,5 +1,6 @@
 import {lazy, Suspense} from "react";
 import SuspenseLoader from "./components/SuspenseLoader";
+import {Navigate} from "react-router-dom";
 
 const Loader = (Component: any) => (props: any) =>
     (
@@ -61,6 +62,10 @@ export const routes =
                                 path: '/main',
                                 element: <MainPage/>,
                             },
+                            {
+                                path: "*",
+                                element: <Navigate to={"/"}/>
+                            }
                         ]
                 }
             ],
@@ -91,6 +96,10 @@ export const routes =
                             {
                                 path: '/auth/register',
                                 element: <RegisterPage/>
+                            },
+                            {
+                                path: "*",
+                                element: <Navigate to={"/"}/>
                             }
                         ]
                 }

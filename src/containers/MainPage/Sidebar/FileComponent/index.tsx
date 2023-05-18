@@ -8,6 +8,7 @@ import {v4 as uuidv4} from "uuid";
 import userApi from "../../../../api/user/user.api";
 import {AlertType} from "react-mui-dropzone";
 import {SnackbarKey, useSnackbar} from "notistack";
+import IconBtn from "../../../../components/IconButton";
 
 export interface FileTicket {
     ticketId: number;
@@ -24,50 +25,38 @@ export interface FileInterface {
 export type Actions = "Delete" | "Edit" | "None";
 
 const DeleteSVG = () => {
-    return <SvgIcon sx={{width: "18px", height: "18px"}} viewBox={"0 0 16 16"}>
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-             xmlns="http://www.w3.org/2000/svg">
-            <path
-                d="M4.25 12.375C4.25 12.7065 4.3817 13.0245 4.61612 13.2589C4.85054 13.4933 5.16848 13.625 5.5 13.625H10.5C10.8315 13.625 11.1495 13.4933 11.3839 13.2589C11.6183 13.0245 11.75 12.7065 11.75 12.375V5.3875C11.75 5.27704 11.6605 5.1875 11.55 5.1875H4.45C4.33954 5.1875 4.25 5.27704 4.25 5.3875V12.375Z"
-                fill="#1A191D"/>
-            <path
-                d="M12.375 3.625C12.375 3.27982 12.0952 3 11.75 3H10.2703C10.2173 3 10.1664 2.97893 10.1289 2.94142L9.62108 2.43358C9.58357 2.39607 9.5327 2.375 9.47966 2.375H6.52034C6.4673 2.375 6.41643 2.39607 6.37892 2.43358L5.87108 2.94142C5.83357 2.97893 5.7827 3 5.72966 3H4.25C3.90482 3 3.625 3.27982 3.625 3.625V3.625C3.625 3.97018 3.90482 4.25 4.25 4.25H8H10.1875H11.75C12.0952 4.25 12.375 3.97018 12.375 3.625V3.625Z"
-                fill="#1A191D"/>
+    return <SvgIcon viewBox={"0 0 32 32"}>
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="16" cy="16" r="16" fill="none"/>
+            <path d="M11 21.8333C11 22.2754 11.1756 22.6993 11.4881 23.0118C11.8007 23.3244 12.2246 23.5 12.6667 23.5H19.3333C19.7754 23.5 20.1993 23.3244 20.5118 23.0118C20.8244 22.6993 21 22.2754 21 21.8333V12.45C21 12.3395 20.9104 12.25 20.8 12.25H11.2C11.0895 12.25 11 12.3395 11 12.45V21.8333Z" fill="#1A191D"/>
+            <path d="M21.8333 10.1667C21.8333 9.70643 21.4602 9.33333 21 9.33333H18.9995C18.9465 9.33333 18.8956 9.31226 18.8581 9.27475L18.1419 8.55858C18.1044 8.52107 18.0535 8.5 18.0005 8.5H13.9995C13.9465 8.5 13.8956 8.52107 13.8581 8.55858L13.1419 9.27475C13.1044 9.31226 13.0535 9.33333 13.0005 9.33333H11C10.5398 9.33333 10.1667 9.70643 10.1667 10.1667C10.1667 10.6269 10.5398 11 11 11H16H18.9167H21C21.4602 11 21.8333 10.6269 21.8333 10.1667Z" fill="#1A191D"/>
         </svg>
     </SvgIcon>
 }
 
 const EditSVG = () => {
-    return <SvgIcon sx={{width: "18px", height: "18px"}} viewBox={"0 0 14 14"}>
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
-             xmlns="http://www.w3.org/2000/svg">
-            <path
-                d="M11.3989 5.06562C11.3211 5.1434 11.1952 5.14377 11.1169 5.06646L8.92227 2.89763C8.84337 2.81966 8.843 2.69238 8.92143 2.61395L9.59584 1.93954C9.81945 1.71593 10.0942 1.60413 10.4201 1.60413C10.746 1.60413 11.0205 1.71593 11.2438 1.93954L12.0604 2.75621C12.284 2.97982 12.4007 3.24971 12.4104 3.56588C12.4201 3.88204 12.3132 4.15174 12.0896 4.37496L11.3989 5.06562ZM2.33334 12.25C2.16806 12.25 2.02942 12.194 1.91742 12.082C1.80542 11.97 1.74961 11.8315 1.75 11.6666V10.0187C1.75 9.94093 1.76459 9.86549 1.79375 9.79238C1.82292 9.71926 1.86667 9.65374 1.925 9.59579L7.79191 3.72888C7.87002 3.65078 7.99665 3.65078 8.07476 3.72888L10.2711 5.9252C10.3492 6.00331 10.3492 6.12994 10.2711 6.20805L4.40417 12.075C4.34584 12.1333 4.28031 12.177 4.20759 12.2062C4.13486 12.2354 4.05942 12.25 3.98125 12.25H2.33334Z"
-                fill="#1A191D"/>
+    return <SvgIcon viewBox={"0 0 32 32"}>
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="16" cy="16" r="16" fill="none"/>
+            <path d="M23.2583 11.8666C22.975 12.1499 22.7 12.4249 22.6917 12.6999C22.6667 12.9666 22.95 13.2416 23.2167 13.4999C23.6167 13.9166 24.0083 14.2916 23.9917 14.6999C23.975 15.1082 23.55 15.5332 23.125 15.9499L19.6833 19.3999L18.5 18.2166L22.0417 14.6832L21.2417 13.8832L20.0583 15.0582L16.9333 11.9332L20.1333 8.74155C20.4583 8.41655 21 8.41655 21.3083 8.74155L23.2583 10.6916C23.5833 10.9999 23.5833 11.5416 23.2583 11.8666ZM8.5 20.3749L16.4667 12.3999L19.5917 15.5249L11.625 23.4999H8.5V20.3749Z" fill="#0C0C0C"/>
         </svg>
     </SvgIcon>
 }
 
 const SuccessSVG = () => {
-    return <SvgIcon sx={{width: "18px", height: "18px"}} viewBox={"0 0 20 20"}>
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-             xmlns="http://www.w3.org/2000/svg">
-            <path
-                strokeWidth="1" stroke="#1A191D"
-                d="M16.9124 5.24581C17.2369 5.57035 17.2369 6.09654 16.9124 6.42109L8.2071 15.1263C7.81657 15.5169 7.18341 15.5169 6.79288 15.1263L3.50452 11.838C3.17985 11.5133 3.17985 10.9869 3.50452 10.6623C3.8289 10.3379 4.35473 10.3375 4.67952 10.6615L7.49999 13.4751L15.7374 5.24553C16.0619 4.92125 16.5879 4.92137 16.9124 5.24581Z"
-                fill="#1A191D"/>
+    return <SvgIcon viewBox={"0 0 32 32"}>
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="16" cy="16" r="16" fill="none"/>
+            <path d="M22.9124 11.2458C23.2369 11.5704 23.2369 12.0965 22.9124 12.4211L14.2071 21.1263C13.8166 21.5169 13.1834 21.5169 12.7929 21.1263L9.50452 17.838C9.17985 17.5133 9.17985 16.9869 9.50452 16.6623C9.8289 16.3379 10.3547 16.3375 10.6795 16.6615L13.5 19.4751L21.7374 11.2455C22.0619 10.9212 22.5879 10.9214 22.9124 11.2458Z" fill="#1A191D"/>
         </svg>
     </SvgIcon>
 }
 
 const CancelSVG = () => {
-    return <SvgIcon sx={{width: "18px", height: "18px"}} viewBox={"0 0 20 20"}>
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-             xmlns="http://www.w3.org/2000/svg">
-            <path
-                d="M5.63165 14.3692L10.0008 10L14.37 14.3692M14.37 5.63086L9.99999 10L5.63165 5.63086"
-                stroke="#1A191D" strokeWidth="2" strokeLinecap="round"
-                strokeLinejoin="round"/>
+    return <SvgIcon viewBox={"0 0 32 32"}>
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="16" cy="16" r="16" fill="none"/>
+            <path d="M11.6317 20.3692L16.0008 16L20.37 20.3692M20.37 11.6309L16 16L11.6317 11.6309" stroke="#1A191D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
     </SvgIcon>
 }
@@ -163,32 +152,32 @@ const FileComponent = (data: FileInterface) => {
         </>
         if (currentAction === 'None')
             return <>
-                <IconButton onClick={() => {
+                <IconBtn onClick={() => {
                     changeAction("Edit")
                 }} sx={{width: "16px", height: "16px"}}>
                     <EditSVG/>
-                </IconButton>
-                <IconButton onClick={() => {
+                </IconBtn>
+                <IconBtn onClick={() => {
                     changeAction("Delete")
                 }} sx={{width: "16px", height: "16px"}}>
                     <DeleteSVG/>
-                </IconButton>
+                </IconBtn>
             </>
         else if (currentAction === 'Edit') return <>
-            <IconButton onClick={confirmEdit} sx={{width: "16px", height: "16px"}}>
+            <IconBtn onClick={confirmEdit} sx={{width: "16px", height: "16px"}}>
                 <SuccessSVG/>
-            </IconButton>
-            <IconButton disabled={true} sx={{cursor: "default", width: "16px", height: "16px", opacity: ".5"}}>
+            </IconBtn>
+            <IconBtn disabled={true} sx={{cursor: "default", width: "16px", height: "16px", opacity: ".5"}}>
                 <EditSVG/>
-            </IconButton>
+            </IconBtn>
         </>
         else return <>
-                <IconButton onClick={deleteTicket} sx={{width: "16px", height: "16px"}}>
+                <IconBtn onClick={deleteTicket} sx={{width: "16px", height: "16px"}}>
                     <SuccessSVG/>
-                </IconButton>
-                <IconButton onClick={cancelDelete} sx={{width: "16px", height: "16px"}}>
+                </IconBtn>
+                <IconBtn onClick={cancelDelete} sx={{width: "16px", height: "16px"}}>
                     <CancelSVG/>
-                </IconButton>
+                </IconBtn>
             </>
     }, [currentAction, loading, currentValue])
 

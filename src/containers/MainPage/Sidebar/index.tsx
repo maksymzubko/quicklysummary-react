@@ -24,7 +24,7 @@ export interface SidebarProps {
 
 const DropIcon = () => {
     return (
-        <svg viewBox={"0 0 278 142"} width={"100%"} height={"100%"}>
+        <svg width={"100%"} height={"100%"}>
             <image href={Icon}/>
         </svg>
     )
