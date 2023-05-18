@@ -191,6 +191,7 @@
 .gpt_buttons div div {
     scroll-behavior: smooth;
     scrollbar-width: none;
+    width: 100%;
 }
 
 .arrows:hover{
