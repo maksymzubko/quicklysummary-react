@@ -10,7 +10,7 @@ function configureAppStore() {
     const store = configureStore({
         reducer: createReducer(),
         middleware: [...getDefaultMiddleware({serializableCheck: false})],
-        devTools: false
+        devTools: true
     });
 
     return { store };

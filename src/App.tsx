@@ -8,7 +8,9 @@ import React, {Suspense, useEffect, useState} from "react";
 import cl from "./layouts/LoadLayout/style.module.css";
 import {Box, LinearProgress, Typography} from "@mui/material";
 import authApi from "./api/auth/auth.api";
-import {setAuthorized, setUser} from "./redux/store/user/slice";
+import {setAuthorized, setLanguage, setUser} from "./redux/store/user/slice";
+import i18n from "i18next";
+import {Languages} from "./api/user/types";
 
 
 function App() {
@@ -28,6 +30,15 @@ function App() {
     }, [loaded]);
 
     useEffect(() => {
+        const language = localStorage.getItem("qs_language")
+        if(language)
+        {
+            dispatch(setLanguage({language: language}))
+            i18n.changeLanguage(language);
+        }
+        else
+            localStorage.setItem("qs_language", "en")
+
         const token = localStorage.getItem('quickly_summary_token');
         if (token) {
             authApi.verifyToken()

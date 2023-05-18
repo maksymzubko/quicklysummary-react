@@ -27,7 +27,9 @@ import {jsPDF} from "jspdf";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import HeaderContext from "../../contexts/headerContext";
-import CustomPrompt from "../../components/CustomPromt";
+import CustomPrompt from "../../components/CustomPromt/index";
+import {useTranslation} from "react-i18next";
+import {messages} from "../../languages/messages";
 
 const MainPage = () => {
     const {enqueueSnackbar, closeSnackbar} = useSnackbar();
@@ -47,7 +49,7 @@ const MainPage = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const leftRef = useRef(null);
     const rightRef = useRef(null);
-
+    const { t } = useTranslation();
 
     useEffect(() => {
         userApi.getTickets()
@@ -215,6 +217,23 @@ const MainPage = () => {
         setPromptText(value)
     }
 
+    const getName = (id: number) => {
+        switch (id){
+            case 1:
+                return t(messages.main.summary())
+            case 2:
+                return t(messages.main.sentences())
+            case 3:
+                return t(messages.main.keywords())
+            case 4:
+                return t(messages.main.p_mentioned())
+            case 5:
+                return t(messages.main.i_discussed())
+            case 6:
+                return t(messages.main.custom())
+        }
+    }
+
     return (
         <Box className={[cl.container].join(' ')}>
             <CustomPrompt opened={promptOpened} onClose={()=>setPromptOpened(false)} onChange={handleChangePrompt} value={promptText}/>
@@ -249,7 +268,7 @@ const MainPage = () => {
                         </Box>
                         {initialText() && <PDFButton onClick={() => {
                             downloadPDF(true)
-                        }} icon_data={{icon: Adobe, position: 'end'}}>Download as PDF</PDFButton>}
+                        }} icon_data={{icon: Adobe, position: 'end'}}>{t(messages.buttons.downloadPdf())}</PDFButton>}
                     </Box>
                     <Box className={cl.drag_container}>
                         <DragResizeContainer text={initialText()} fontSize={getFontSize()} minHeight={"10%"}
@@ -268,14 +287,14 @@ const MainPage = () => {
                                 </IconButton>
                             {/*</Box>*/}
                             {types.map(t => <Box key={t.id} onClick={() => changeActiveGpt(t.id)}
-                                                 className={[cl.gpt_button, selectedGpt === t.id ? cl.active : ""].join(" ")}>{t.name}</Box>)}
+                                                 className={[cl.gpt_button, selectedGpt === t.id ? cl.active : ""].join(" ")}>{getName(t.id)}</Box>)}
                         </Box>
                     </Box>
                     {/*<Box className={cl.top_content}>*/}
                     <Box id={"gpt_text_content"} sx={{fontSize: getFontSize()}} className={cl.gpt_text}>
                         {gptText() ??
                             <Box sx={{display: "grid", placeContent: "center", width: "100%", height: "100%"}}>
-                                This will show the general summary of the text above
+                                {t(messages.main.showSummary())}
                             </Box>
                         }
                     </Box>
@@ -284,7 +303,7 @@ const MainPage = () => {
                     <Box className={cl.gpt_buttons_bottom}>
                         <Box className={cl.left}>
                             <PDFButton loading={loadingStart()} disabled={disabledStart()}
-                                       onClick={sendGPTReq}>Start</PDFButton>
+                                       onClick={sendGPTReq}>{t(messages.buttons.start())}</PDFButton>
                             {initialText() &&
                                 <CustomSelector theme={'black'} data={['en', 'jp', 'ua', 'ru'] as Languages[]}
                                                 animationSide={AnimationSides.right}
@@ -292,7 +311,7 @@ const MainPage = () => {
                         </Box>
                         {initialText() && <PDFButton disabled={!gptText()} onClick={() => {
                             downloadPDF(false)
-                        }} icon_data={{icon: Adobe, position: 'end'}}>Download as PDF</PDFButton>}
+                        }} icon_data={{icon: Adobe, position: 'end'}}>{t(messages.buttons.downloadPdf())}</PDFButton>}
                     </Box>
                 </Box>
             </Box>

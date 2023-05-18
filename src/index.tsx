@@ -8,10 +8,11 @@ import {store} from "./redux/store/configureStore";
 import {Button, IconButton, ThemeProvider} from "@mui/material";
 import defaultTheme from "./themes/defaultTheme";
 import CancelIcon from '@mui/icons-material/Cancel';
+import './languages/i18n'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <Provider store={store}>
-        <SnackbarProvider maxSnack={3} hideIconVariant={true} action={(key) => (<IconButton onClick={()=>closeSnackbar(key)}><CancelIcon sx={{fill:'white'}}/></IconButton>)}>
+        <SnackbarProvider maxSnack={0} hideIconVariant={true} action={(key) => (<IconButton onClick={()=>closeSnackbar(key)}><CancelIcon sx={{fill:'white'}}/></IconButton>)}>
             <BrowserRouter>
                 <ThemeProvider theme={defaultTheme}>
                     <App/>

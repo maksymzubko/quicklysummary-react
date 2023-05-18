@@ -8,13 +8,13 @@ import {useSelector} from "react-redux";
 import {SelectIsAuthorized} from "../../redux/store/user/selector";
 import {useNavigate} from "react-router-dom";
 import {links} from "../../router";
+import {useTranslation} from "react-i18next";
+import {messages} from "../../languages/messages";
 
 const LandingPage = () => {
     const isAuthorized = useSelector(SelectIsAuthorized);
+    const { t } = useTranslation();
     const navigate = useNavigate();
-    useEffect(() => {
-
-    }, [])
 
     return (
         <Box className={[cl.container].join(' ')}>
@@ -24,7 +24,7 @@ const LandingPage = () => {
                 <Typography className={cl.text}>Lorem ipsum dolor sit amet consectetur. Enim ac scelerisque elementum gravida. Adipiscing in
                     tincidunt ut vel. Ut vitae eget tortor volutpat. Massa auctor massa vulputate nunc purus tempus.
                     Nulla dapibus enim nec sed sapien feugiat aliquam.</Typography>
-                <LayoutButton onClick={() => {navigate(isAuthorized ? links.main : links.auth)}}>Get started</LayoutButton>
+                <LayoutButton onClick={() => {navigate(isAuthorized ? links.main : links.auth)}}>{t(messages.buttons.startBtn())}</LayoutButton>
             </Box>
             <img src={Image} alt={'image'}/>
         </Box>

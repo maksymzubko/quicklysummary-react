@@ -12,6 +12,8 @@ import {
 } from "@mui/material";
 import HeaderButton from "../Button/HeaderButton";
 import ContactButton from "../Button/ContactButton";
+import {useTranslation} from "react-i18next";
+import {messages} from "../../languages/messages";
 
 export interface ContactUsInterface {
     opened: boolean;
@@ -48,6 +50,7 @@ const ContactUs = (data: ContactUsInterface) => {
     const [name, setName] = useState("")
     const [message, setMessage] = useState("")
     const [isAllowed, setIsAllowed] = useState(false)
+    const {t} = useTranslation()
 
     //@ts-ignore
     const handleChangeName = (event: any) => {
@@ -100,24 +103,24 @@ const ContactUs = (data: ContactUsInterface) => {
             <ClickAwayListener onClickAway={onClose}>
                 <Box className={cl.content}>
                     <Box className={cl.header}>
-                        <Typography className={cl.contact_us}>Contact us</Typography>
-                        <Typography className={cl.fill}>Fill in the fields</Typography>
+                        <Typography className={cl.contact_us}>{t(messages.contactUs.contactUs())}</Typography>
+                        <Typography className={cl.fill}>{t(messages.contactUs.fields())}</Typography>
                     </Box>
 
                     <Box className={cl.inputs}>
-                        <TextField placeholder={"Name"} variant={'standard'} onChange={handleChangeName} value={name}/>
+                        <TextField placeholder={t(messages.contactUs.name())} variant={'standard'} onChange={handleChangeName} value={name}/>
                         <TextField multiline={true} maxRows={5} sx={{"&": {scrollbarWidth: "thin"}}}
-                                   placeholder={"Message"} variant={'standard'} onChange={handleChangeMessage}
+                                   placeholder={t(messages.contactUs.message())} variant={'standard'} onChange={handleChangeMessage}
                                    value={message}/>
                         <FormGroup sx={{width: "100%"}}>
                             <FormControlLabel
                                 control={<Checkbox icon={<NonChecked/>} checkedIcon={<Checked/>} checked={isAllowed}
                                                    onChange={handleChangeIsAllowed}/>}
-                                label="I allow my data to be processed"/>
+                                label={t(messages.contactUs.allowData())}/>
                         </FormGroup>
                     </Box>
 
-                    <ContactButton disabled={isDisabled()} onClick={data.onClose}>Send</ContactButton>
+                    <ContactButton disabled={isDisabled()} onClick={data.onClose}>{t(messages.buttons.send())}</ContactButton>
                 </Box>
             </ClickAwayListener>
         </Box>

@@ -1,0 +1,63 @@
+{
+  "landing": {
+  },
+  "header": {
+    "login": "ログイン",
+    "contactUs": "ログイ",
+    "logout": "ログアウト"
+  },
+  "main": {
+    "dropFiles": "ここにファイルを置いてください",
+    "uploadedFiles": "アップロードされたファイル",
+    "actions": "加工中のプロセス",
+    "summary": "概要",
+    "sentences": "10センテンス",
+    "keywords": "主なキーワード",
+    "p_mentioned": "言及された人々",
+    "i_discussed": "問題提起",
+    "custom": "お客様のご要望",
+    "e_prompt": "プロンプトを入力する",
+    "start": "スタート",
+    "showText": "これにより、ファイルのすべてのテキストが表示されます",
+    "showSummary": "これにより、上記のテキストの概要が表示されます"
+  },
+  "login": {
+    "text1": "ログイン",
+    "text2": "またはアカウントを作成する",
+    "text3": "または電子メールを使用する",
+    "register": "登録",
+    "password": "パスワード",
+    "c_password": "パスワードの確認",
+    "email_already": "このメールはすでに取得済みです",
+    "incorrect_pass": "パスワードが正しくない",
+    "email": "Eメール",
+    "f_password": "パスワードをお忘れですか"
+  },
+  "contactUs": {
+    "contactUs": "お問い合わせ",
+    "fields": "フィールドに記入する",
+    "allowData": "自分の個人情報の取り扱いに同意する",
+    "name": "あなたの名前",
+    "message": "リクエスト"
+  },
+  "google": {
+    "oops": "おっと..",
+    "error": "Google にサインインしようとすると問題が発生します。",
+    "authorized": "認可された",
+    "redirect_msg": "数秒後にリダイレクトされます。",
+    "loading": "読み込み中..."
+  },
+  "buttons": {
+    "google": "Google を続ける",
+    "facebook": "Facebook を続ける",
+    "apple": "Apple を続ける",
+    "register": "登録",
+    "login": "入るには",
+    "continue": "続く",
+    "send": "送信",
+    "startBtn": "スタート",
+    "start": "スタート",
+    "downloadPdf": "PDFでダウンロード",
+    "goto": "ログインページに移動"
+  }
+}

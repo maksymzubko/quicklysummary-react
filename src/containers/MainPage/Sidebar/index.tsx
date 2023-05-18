@@ -13,6 +13,8 @@ import {SnackbarKey, useSnackbar} from "notistack";
 import {useDispatch} from "react-redux";
 import { v4 as uuidv4 } from 'uuid';
 import {addStatus, addTicket, updateStatus} from "../../../redux/store/manager/slice";
+import {useTranslation} from "react-i18next";
+import {messages} from "../../../languages/messages";
 
 export interface SidebarProps {
     tickets: FileTicket[]
@@ -31,6 +33,7 @@ const DropIcon = () => {
 const Sidebar = (data: SidebarProps) => {
     const {enqueueSnackbar, closeSnackbar} = useSnackbar();
     const dispatch = useDispatch()
+    const { t } = useTranslation();
 
     const onChangeFile = (e: File[]) => {
         if(e.length)
@@ -57,7 +60,7 @@ const Sidebar = (data: SidebarProps) => {
     return (
         <Box className={cl.container}>
             <Box className={cl.drop_field}>
-                <Typography className={cl.h1}>Drop your file here</Typography>
+                <Typography className={cl.h1}>{t(messages.main.dropFiles())}</Typography>
                 <Typography className={cl.h2}>.txt .mp3 .mp4</Typography>
                 <DropzoneArea
                     showAlerts={false}
@@ -72,7 +75,7 @@ const Sidebar = (data: SidebarProps) => {
                 />
             </Box>
             <Box className={cl.files}>
-                <Box className={cl.header}>Uploaded files</Box>
+                <Box className={cl.header}>{t(messages.main.uploadedFiles())}</Box>
                 <FilesListComponent onSelect={data.onSelectTicket} files={data.tickets}/>
             </Box>
             <Box className={cl.coins}>
@@ -80,7 +83,7 @@ const Sidebar = (data: SidebarProps) => {
                 <Box className={cl.coins_de}>Want more?<Box className={cl.upgrade}>Upgrade now</Box></Box>
             </Box>
             <Box className={cl.statuses}>
-                <Box className={cl.header}>Actions</Box>
+                <Box className={cl.header}>{t(messages.main.actions())}</Box>
                 <StatusesListComponent statuses={data.statuses}/>
             </Box>
         </Box>
