@@ -46,12 +46,12 @@
     outline: white solid 1px;
 }
 
-.select.black .content:hover, .select.black .current_content:hover{
-    outline: black solid 1px;
+.select.black .content path{
+    stroke: #1a191d;
 }
 
-.select.black .others_content img{
-    filter: invert(0%);
+.select.black .content:hover, .select.black .current_content:hover{
+    outline: black solid 1px;
 }
 
 .others_content div:hover{
@@ -81,39 +81,47 @@
     pointer-events: none;
 }
 
-.show_list .others_content div{
+.show_list .others_content div,
+.show_list .others_content button{
     visibility: visible;
     opacity: 0;
     animation: slide-in 0.5s ease-out forwards;
 }
 
-.hide_list .others_content div{
+.hide_list .others_content div,
+.hide_list .others_content button{
     opacity: 1;
     transform: translateX(0);
     pointer-events: none;
 }
 
-.right.show_list .others_content div {
+.right.show_list .others_content div,
+.right.show_list .others_content button{
     transform: translateX(-100%);
 }
 
-.left.show_list .others_content div{
+.left.show_list .others_content div,
+.left.show_list .others_content button{
     transform: translateX(100%);
 }
 
-.select:is([data-dont-animate="0"]).right.hide_list .others_content div{
+.select:is([data-dont-animate="0"]).right.hide_list .others_content div,
+.select:is([data-dont-animate="0"]).right.hide_list .others_content button{
     animation: slide-out-reverse 0.5s ease-out forwards;
 }
 
-.select:is([data-dont-animate="1"]).right.hide_list .others_content div{
+.select:is([data-dont-animate="1"]).right.hide_list .others_content div,
+.select:is([data-dont-animate="1"]).right.hide_list .others_content button{
     animation: slide-out-reverse 0s ease-out forwards;
 }
 
-.select:is([data-dont-animate="0"]).left.hide_list .others_content div{
+.select:is([data-dont-animate="0"]).left.hide_list .others_content div,
+.select:is([data-dont-animate="0"]).left.hide_list .others_content button{
     animation: slide-out 0.5s ease-out forwards;
 }
 
-.select:is([data-dont-animate="1"]).left.hide_list .others_content div{
+.select:is([data-dont-animate="1"]).left.hide_list .others_content div,
+.select:is([data-dont-animate="1"]).left.hide_list .others_content button {
     animation: slide-out 0s ease-out forwards;
 }
 
@@ -132,9 +140,9 @@
     animation-delay: .2s;
 }
 
-.show_list .others_content div:nth-child(4),
-.hide_list .others_content div:nth-child(4) {
-    animation-delay: .1s;
+.show_list .others_content button,
+.hide_list .others_content button {
+    animation-delay: .5s;
 }
 
 @keyframes slide-in {

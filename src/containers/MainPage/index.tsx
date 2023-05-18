@@ -30,6 +30,7 @@ import HeaderContext from "../../contexts/headerContext";
 import CustomPrompt from "../../components/CustomPromt/index";
 import {useTranslation} from "react-i18next";
 import {messages} from "../../languages/messages";
+import IconBtn from "../../components/IconButton";
 
 const MainPage = () => {
     const {enqueueSnackbar, closeSnackbar} = useSnackbar();
@@ -73,7 +74,7 @@ const MainPage = () => {
     }
 
     const scaleDown = () => {
-        setScale(scale > 100 ? scale - 25 : scale)
+        setScale(scale > 25 ? scale - 25 : scale)
     }
 
     const reset = () => {
@@ -244,26 +245,34 @@ const MainPage = () => {
                         <Box className={cl.left_side}>
                             <Box className={cl.scale}>{scale}%</Box>
                             <Box className={cl.buttons}>
-                                <IconButton onClick={scaleUp} size={"small"}>
-                                    <AddIcon color={"primary"}/>
-                                </IconButton>
-                                <IconButton onClick={scaleDown} size={"small"}>
-                                    <RemoveIcon color={"primary"}/>
-                                </IconButton>
-                                {scale > 100 && <IconButton onClick={reset} size={"small"}>
-                                    <SvgIcon viewBox={"0 0 20 20"}>
-                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                             xmlns="http://www.w3.org/2000/svg">
-                                            <rect width="20" height="20" fill="none"/>
-                                            <path
-                                                d="M9.22307 6.67391L6.33911 3.84783C5.98786 3.50362 5.90948 3.10978 6.10396 2.6663C6.29844 2.22283 6.64489 2.00072 7.14329 2H12.8557C13.3549 2 13.7017 2.2221 13.8962 2.6663C14.0907 3.11051 14.0119 3.50435 13.6599 3.84783L10.776 6.67391C10.665 6.78261 10.5449 6.86413 10.4155 6.91848C10.2861 6.97283 10.1474 7 9.99952 7C9.85162 7 9.71297 6.97283 9.58356 6.91848C9.45415 6.86413 9.33399 6.78261 9.22307 6.67391Z"
-                                                fill="#1A191D"/>
-                                            <path
-                                                d="M10.7769 13.3261L13.6609 16.1522C14.0121 16.4964 14.0905 16.8902 13.896 17.3337C13.7016 17.7772 13.3551 17.9993 12.8567 18L7.14426 18C6.64512 18 6.2983 17.7779 6.10382 17.3337C5.90934 16.8895 5.98809 16.4957 6.34008 16.1522L9.22404 13.3261C9.33496 13.2174 9.45512 13.1359 9.58453 13.0815C9.71394 13.0272 9.85259 13 10.0005 13C10.1484 13 10.287 13.0272 10.4164 13.0815C10.5458 13.1359 10.666 13.2174 10.7769 13.3261Z"
-                                                fill="#1A191D"/>
+                                <IconBtn onClick={scaleUp}>
+                                    <SvgIcon viewBox={"0 0 32 32"}>
+                                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="16" cy="16" r="16" fill="white"/>
+                                            <rect width="20" height="20" transform="translate(6 6)" fill="white"/>
+                                            <path d="M21 16.8317H16.8334V20.9984C16.8334 21.2194 16.7456 21.4313 16.5893 21.5876C16.433 21.7439 16.221 21.8317 16 21.8317C15.779 21.8317 15.567 21.7439 15.4108 21.5876C15.2545 21.4313 15.1667 21.2194 15.1667 20.9984V16.8317H11C10.779 16.8317 10.567 16.7439 10.4108 16.5876C10.2545 16.4313 10.1667 16.2194 10.1667 15.9984C10.1667 15.7774 10.2545 15.5654 10.4108 15.4091C10.567 15.2528 10.779 15.165 11 15.165H15.1667V10.9984C15.1667 10.7774 15.2545 10.5654 15.4108 10.4091C15.567 10.2528 15.779 10.165 16 10.165C16.221 10.165 16.433 10.2528 16.5893 10.4091C16.7456 10.5654 16.8334 10.7774 16.8334 10.9984V15.165H21C21.221 15.165 21.433 15.2528 21.5893 15.4091C21.7456 15.5654 21.8334 15.7774 21.8334 15.9984C21.8334 16.2194 21.7456 16.4313 21.5893 16.5876C21.433 16.7439 21.221 16.8317 21 16.8317Z" fill="#1A191D"/>
                                         </svg>
                                     </SvgIcon>
-                                </IconButton>}
+                                </IconBtn>
+                                <IconBtn onClick={scaleDown}>
+                                    <SvgIcon viewBox={"0 0 32 32"}>
+                                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="16" cy="16" r="16" fill="white"/>
+                                            <rect width="20" height="20" transform="translate(6 6)" fill="white"/>
+                                            <path d="M21 16.8317H11C10.779 16.8317 10.567 16.7439 10.4108 16.5876C10.2545 16.4313 10.1667 16.2194 10.1667 15.9984C10.1667 15.7774 10.2545 15.5654 10.4108 15.4091C10.567 15.2528 10.779 15.165 11 15.165H21C21.221 15.165 21.433 15.2528 21.5893 15.4091C21.7456 15.5654 21.8334 15.7774 21.8334 15.9984C21.8334 16.2194 21.7456 16.4313 21.5893 16.5876C21.433 16.7439 21.221 16.8317 21 16.8317Z" fill="#1A191D"/>
+                                        </svg>
+                                    </SvgIcon>
+                                </IconBtn>
+                                {scale !== 100 && <IconBtn onClick={reset}>
+                                    <SvgIcon viewBox={"0 0 32 32"}>
+                                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="16" cy="16" r="16" fill="white"/>
+                                            <rect width="20" height="20" transform="translate(6 6)" fill="white"/>
+                                            <path d="M15.2231 12.6739L12.3391 9.84783C11.9879 9.50362 11.9095 9.10978 12.104 8.6663C12.2984 8.22283 12.6449 8.00072 13.1433 8H18.8557C19.3549 8 19.7017 8.2221 19.8962 8.6663C20.0907 9.11051 20.0119 9.50435 19.6599 9.84783L16.776 12.6739C16.665 12.7826 16.5449 12.8641 16.4155 12.9185C16.2861 12.9728 16.1474 13 15.9995 13C15.8516 13 15.713 12.9728 15.5836 12.9185C15.4542 12.8641 15.334 12.7826 15.2231 12.6739Z" fill="#1A191D"/>
+                                            <path d="M16.7769 19.3261L19.6609 22.1522C20.0121 22.4964 20.0905 22.8902 19.896 23.3337C19.7016 23.7772 19.3551 23.9993 18.8567 24L13.1443 24C12.6451 24 12.2983 23.7779 12.1038 23.3337C11.9093 22.8895 11.9881 22.4957 12.3401 22.1522L15.224 19.3261C15.335 19.2174 15.4551 19.1359 15.5845 19.0815C15.7139 19.0272 15.8526 19 16.0005 19C16.1484 19 16.287 19.0272 16.4164 19.0815C16.5458 19.1359 16.666 19.2174 16.7769 19.3261Z" fill="#1A191D"/>
+                                        </svg>
+                                    </SvgIcon>
+                                </IconBtn>}
                             </Box>
                         </Box>
                         {initialText() && <PDFButton onClick={() => {
@@ -279,12 +288,12 @@ const MainPage = () => {
                     <Box className={cl.gpt_buttons_wrapper}>
                         <Box ref={containerRef} className={cl.gpt_buttons}>
                             {/*<Box className={cl.arrows}>*/}
-                                <IconButton ref={leftRef} onClick={scrollLeft} className={cl.arrow}>
+                                <IconBtn ref={leftRef} onClick={scrollLeft} className={cl.arrow}>
                                     <ArrowBackIosNewIcon/>
-                                </IconButton>
-                                <IconButton ref={rightRef} onClick={scrollRight} className={cl.arrow}>
+                                </IconBtn>
+                                <IconBtn ref={rightRef} onClick={scrollRight} className={cl.arrow}>
                                     <ArrowForwardIosIcon/>
-                                </IconButton>
+                                </IconBtn>
                             {/*</Box>*/}
                             {types.map(t => <Box key={t.id} onClick={() => changeActiveGpt(t.id)}
                                                  className={[cl.gpt_button, selectedGpt === t.id ? cl.active : ""].join(" ")}>{getName(t.id)}</Box>)}

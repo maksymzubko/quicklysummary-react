@@ -48,7 +48,7 @@ const managerSlice = createSlice({
             state.statuses = action.payload.statuses;
         },
         addStatus: (state:Manager, action: PayloadAction<{status: StatusInterface | null}>) => {
-            state.statuses.push(action.payload.status)
+            state.statuses = [action.payload.status, ...state.statuses]
         },
         updateStatus: (state:Manager, action: PayloadAction<{status: StatusInterface | null}>) => {
             const index = state.statuses.findIndex(obj => obj.id === action.payload.status.id);

@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState, useTransition} from 'react';
-import {Avatar, Box, Divider, Typography} from "@mui/material";
+import {Avatar, Box, ClickAwayListener, Divider, Typography} from "@mui/material";
 import cl from './style.module.css'
 import LogoutIcon from '@mui/icons-material/Logout';
 import {useDispatch, useSelector} from "react-redux";
@@ -16,6 +16,7 @@ const HeaderDropDown = () => {
     const [show, setShow] = useState(false)
     const {setHelpOpened} = useContext(HeaderContext);
 
+    const [canClose, setCanClose] = useState(false)
     const userData = useSelector(SelectUser);
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -37,38 +38,58 @@ const HeaderDropDown = () => {
     }
 
     useEffect(() => {
+        if(show){
+            setTimeout(()=>{
+                setCanClose(true)
+            }, 500)
+        }
+        else
+        {
+            setTimeout(()=>{
+                setCanClose(false)
+            }, 100)
+        }
+    }, [show])
+
+    useEffect(() => {
         setTimeout(() => {
             document.querySelector(`.${cl.dropdown_container}`).setAttribute("data-dont-animate", "0");
         }, 500)
     }, [])
 
+    const onClose = () => {
+        if(canClose) setShow(false)
+    }
+
     return (
         <Box className={cl.container}>
             <Box onClick={() => setShow(!show)} className={cl.click_item}>
-                <Avatar/>
+                <Avatar sx={{height:"32px", width:"32px"}}/>
             </Box>
-            <Box data-dont-animate={"1"} className={[cl.dropdown_container, show ? cl.show : cl.hide].join(' ')}>
-                <Box className={cl.header}>
-                    <Avatar/>
-                    <Box className={cl.info}>
-                        <Typography className={cl.name}>{userData?.uuid ?? "Incorrect UID"}</Typography>
-                        <Typography className={cl.email}>{userData?.email ?? "Incorrect email"}</Typography>
+            <ClickAwayListener onClickAway={onClose}>
+                <Box data-dont-animate={"1"} className={[cl.dropdown_container, show ? cl.show : cl.hide].join(' ')}>
+                    <Box className={cl.header}>
+                        <Avatar/>
+                        <Box className={cl.info}>
+                            <Typography className={cl.name}>{userData?.uuid ?? "Incorrect UID"}</Typography>
+                            <Typography className={cl.email}>{userData?.email ?? "Incorrect email"}</Typography>
+                        </Box>
+                    </Box>
+                    {/*<Box onClick={()=>setShow(false)} className={cl.content}>*/}
+                    {/*    <PortraitIcon fontSize={"small"}/> Profile Details*/}
+                    {/*</Box>*/}
+                    {/*<Box onClick={()=>setShow(false)} className={cl.content}>*/}
+                    {/*    <MonetizationOnOutlinedIcon fontSize={"small"}/> Plans and Billing*/}
+                    {/*</Box>*/}
+                    <Box onClick={() => setHelpOpened(true)} className={cl.content}>
+                        <ChatBubbleOutlineIcon fontSize={"small"}/> {t(messages.header.contactUs())}
+                    </Box>
+                    <hr/>
+                    <Box onClick={logOut} className={cl.content}>
+                        <LogoutIcon fontSize={"small"}/> {t(messages.header.logout())}
                     </Box>
                 </Box>
-                {/*<Box onClick={()=>setShow(false)} className={cl.content}>*/}
-                {/*    <PortraitIcon fontSize={"small"}/> Profile Details*/}
-                {/*</Box>*/}
-                {/*<Box onClick={()=>setShow(false)} className={cl.content}>*/}
-                {/*    <MonetizationOnOutlinedIcon fontSize={"small"}/> Plans and Billing*/}
-                {/*</Box>*/}
-                <Box onClick={() => setHelpOpened(true)} className={cl.content}>
-                    <ChatBubbleOutlineIcon fontSize={"small"}/> {t(messages.header.contactUs())}
-                </Box>
-                <hr/>
-                <Box onClick={logOut} className={cl.content}>
-                    <LogoutIcon fontSize={"small"}/> {t(messages.header.logout())}
-                </Box>
-            </Box>
+            </ClickAwayListener>
         </Box>
     );
 };

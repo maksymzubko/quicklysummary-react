@@ -1,4 +1,4 @@
-import {Box, CircularProgress} from "@mui/material";
+import {Box, CircularProgress, SxProps, Theme} from "@mui/material";
 import cl from './style.module.css'
 import {CSSProperties} from "react";
 
@@ -22,7 +22,7 @@ export interface ButtonData {
     };
     loading?: boolean;
     disabled?: boolean;
-    style?: CSSProperties;
+    style?: any;
 }
 
 const CustomButton = (data: ButtonData) => {
@@ -30,6 +30,7 @@ const CustomButton = (data: ButtonData) => {
         <Box
             style={data?.style}
             sx={{
+                ...data?.style,
                 "--data-backgroundcolor": data.args?.data_background_color ?? "none",
                 "--data-backgroundcolorhover": data.args?.data_background_color_hover ?? "linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 100%)",
                 "--data-colorhover": data.args?.data_color_hover ?? "#1A191D",

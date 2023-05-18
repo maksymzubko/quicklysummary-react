@@ -16,6 +16,7 @@
     /*justify-content: center;*/
     gap: 10px;
 
+    min-width: 350px;
     overflow: auto;
     height: calc(70vh - var(--header-height));
     padding: 48px;
@@ -45,7 +46,7 @@
     align-self: center;
     font-style: normal;
     font-weight: 600;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 16px;
 }
 

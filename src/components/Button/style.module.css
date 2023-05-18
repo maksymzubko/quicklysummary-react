@@ -1,4 +1,5 @@
 .container{
+    position: relative;
     color: var(--data-color);
     font-family: 'Nunito Sans';
     font-style: normal;
@@ -18,6 +19,8 @@
 }
 
 .container img{
+    /*position: absolute;*/
+    /*left: 9%;*/
     max-width: 16px;
 }
 
