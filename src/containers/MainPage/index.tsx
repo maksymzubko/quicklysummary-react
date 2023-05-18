@@ -2,8 +2,6 @@ import React, {LegacyRef, useCallback, useContext, useEffect, useRef, useState} 
 import {Box, Divider, IconButton, SvgIcon} from "@mui/material";
 import cl from './style.module.css'
 import Sidebar from "./Sidebar/index";
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
 import Adobe from './assets/adobe-acrobat-dc-logo-2020-1 1.svg'
 import PDFButton from "../../components/Button/PDFButton/index";
 import DragResizeContainer from "../../components/DragResizeContainer/index";
@@ -24,18 +22,12 @@ import {v4 as uuidv4} from "uuid";
 import {AlertType} from "react-mui-dropzone";
 import {SnackbarKey, useSnackbar} from "notistack";
 import {jsPDF} from "jspdf";
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import HeaderContext from "../../contexts/headerContext";
 import CustomPrompt from "../../components/CustomPromt/index";
 import {useTranslation} from "react-i18next";
 import {messages} from "../../languages/messages";
 import IconBtn from "../../components/IconButton";
 import {Scrollbars} from "react-custom-scrollbars";
-
-const B = () => {
-    return (<Box></Box>)
-}
 
 const MainPage = () => {
     const {enqueueSnackbar, closeSnackbar} = useSnackbar();
@@ -119,7 +111,6 @@ const MainPage = () => {
         if (containerRef.current) {
             const values = containerRef.current.getValues()
             containerRef.current.scrollLeft(values.scrollLeft + 100); // Adjust the scroll distance as needed
-
             if (rightRef.current) {
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 //@ts-ignore
@@ -305,12 +296,22 @@ const MainPage = () => {
                     <Box className={cl.gpt_buttons_wrapper}>
                         <Box className={cl.gpt_buttons}>
                             {/*<Box className={cl.arrows}>*/}
-                            <IconButton ref={leftRef} onClick={scrollLeft} className={cl.arrow}>
-                                <ArrowBackIosNewIcon/>
-                            </IconButton>
-                            <IconButton ref={rightRef} onClick={scrollRight} className={cl.arrow}>
-                                <ArrowForwardIosIcon/>
-                            </IconButton>
+                            <IconBtn ref={leftRef} onClick={scrollLeft} className={cl.arrow}>
+                                <SvgIcon viewBox={"0 0 32 32"}>
+                                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="16" cy="16" r="16" fill="none"/>
+                                        <path d="M19.125 25.1L10.7 16.7C10.6 16.6 10.529 16.4917 10.487 16.375C10.445 16.2584 10.4243 16.1334 10.425 16C10.425 15.8667 10.4457 15.7417 10.487 15.625C10.5283 15.5084 10.5993 15.4 10.7 15.3L19.125 6.87502C19.3583 6.64169 19.65 6.52502 20 6.52502C20.35 6.52502 20.65 6.65002 20.9 6.90002C21.15 7.15002 21.275 7.44169 21.275 7.77502C21.275 8.10836 21.15 8.40002 20.9 8.65002L13.55 16L20.9 23.35C21.1333 23.5834 21.25 23.871 21.25 24.213C21.25 24.555 21.125 24.8507 20.875 25.1C20.625 25.35 20.3333 25.475 20 25.475C19.6667 25.475 19.375 25.35 19.125 25.1Z" fill="black"/>
+                                    </svg>
+                                </SvgIcon>
+                            </IconBtn>
+                            <IconBtn ref={rightRef} onClick={scrollRight} className={cl.arrow}>
+                                <SvgIcon viewBox={"0 0 32 32"}>
+                                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="16" cy="16" r="16" transform="rotate(-180 16 16)" fill="none"/>
+                                        <path d="M12.875 6.89997L21.3 15.3C21.4 15.4 21.471 15.5083 21.513 15.625C21.555 15.7416 21.5757 15.8666 21.575 16C21.575 16.1333 21.5543 16.2583 21.513 16.375C21.4717 16.4916 21.4007 16.6 21.3 16.7L12.875 25.125C12.6417 25.3583 12.35 25.475 12 25.475C11.65 25.475 11.35 25.35 11.1 25.1C10.85 24.85 10.725 24.5583 10.725 24.225C10.725 23.8916 10.85 23.6 11.1 23.35L18.45 16L11.1 8.64997C10.8667 8.41664 10.75 8.12897 10.75 7.78697C10.75 7.44497 10.875 7.14931 11.125 6.89997C11.375 6.64997 11.6667 6.52497 12 6.52497C12.3333 6.52497 12.625 6.64997 12.875 6.89997Z" fill="black"/>
+                                    </svg>
+                                </SvgIcon>
+                            </IconBtn>
                             {/*</Box>*/}
                             <Scrollbars ref={containerRef} autoHeight={true} autoHeightMin={42}>
                                 <Box className={cl.btn_content}>

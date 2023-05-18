@@ -66,12 +66,13 @@
 }
 .gpt_buttons_wrapper{
     position: relative;
-    min-height: 32px;
+    min-height: 42px;
     width: 100%;
     margin-bottom: 16px;
 }
 .gpt_buttons{
     height: 100%;
+    background: linear-gradient(86deg, rgba(255,255,255,1) 2.63%, rgba(255,255,255,0) 7%, rgba(255,255,255,0) 93%, rgba(255,255,255,1) 97%);
     /*overflow-x: auto;*/
     /*scrollbar-width: thin;*/
     /*scrollbar-width: none;*/
@@ -199,19 +200,21 @@
 .arrow{
     z-index: 9999;
     position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     display: none;
-    height: 100%;
-    border-radius: 0;
+    height: 32px;
+    /*border-radius: 0;*/
 }
 
 .arrow:nth-child(2){
     right: 0;
-    background: linear-gradient(92.97deg, rgba(255, 255, 255, 0) 12.63%, #FFFFFF 91.44%);
+    /*background: linear-gradient(92.97deg, rgba(255, 255, 255, 0) 12.63%, #FFFFFF 91.44%);*/
 }
 
 .arrow:nth-child(1){
     left: 0;
-    background: linear-gradient(92.97deg, rgba(255,255,255,1) 12.63%, rgba(255,255,255,0) 91.44%);
+    /*background: linear-gradient(92.97deg, rgba(255,255,255,1) 12.63%, rgba(255,255,255,0) 91.44%);*/
 }
 
 @media screen and (max-width: 1600px) {

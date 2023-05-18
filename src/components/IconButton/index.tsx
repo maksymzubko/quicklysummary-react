@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {forwardRef} from 'react';
 import {IconButton, IconButtonProps, styled, Button} from "@mui/material";
 
 const CustomIconBtn = styled(IconButton)((props) => ({
@@ -8,12 +8,12 @@ const CustomIconBtn = styled(IconButton)((props) => ({
     "& svg":{fontSize:"2rem"}
 }));
 
-const IconBtn = (data: IconButtonProps) => {
+const IconBtn = (data:IconButtonProps, ref: any) => {
     return (
-        <CustomIconBtn {...data}>
+        <CustomIconBtn ref={ref} {...data}>
             {data.children}
         </CustomIconBtn>
     );
 };
 
-export default IconBtn;
+export default forwardRef(IconBtn);
