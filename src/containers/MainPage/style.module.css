@@ -53,7 +53,7 @@
 
 .gpt_context, .text_reader{
     max-height: 80%;
-    min-height: 15%;
+    min-height: 125px;
 }
 
 .gpt_context, .top_content{

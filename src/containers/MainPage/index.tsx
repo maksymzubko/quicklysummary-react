@@ -288,12 +288,12 @@ const MainPage = () => {
                     <Box className={cl.gpt_buttons_wrapper}>
                         <Box ref={containerRef} className={cl.gpt_buttons}>
                             {/*<Box className={cl.arrows}>*/}
-                                <IconBtn ref={leftRef} onClick={scrollLeft} className={cl.arrow}>
+                                <IconButton ref={leftRef} onClick={scrollLeft} className={cl.arrow}>
                                     <ArrowBackIosNewIcon/>
-                                </IconBtn>
-                                <IconBtn ref={rightRef} onClick={scrollRight} className={cl.arrow}>
+                                </IconButton>
+                                <IconButton ref={rightRef} onClick={scrollRight} className={cl.arrow}>
                                     <ArrowForwardIosIcon/>
-                                </IconBtn>
+                                </IconButton>
                             {/*</Box>*/}
                             {types.map(t => <Box key={t.id} onClick={() => changeActiveGpt(t.id)}
                                                  className={[cl.gpt_button, selectedGpt === t.id ? cl.active : ""].join(" ")}>{getName(t.id)}</Box>)}

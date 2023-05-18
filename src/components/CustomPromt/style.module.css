@@ -16,6 +16,13 @@
 }
 
 .content{
+    user-select: none;
+    background: white;
+    z-index: 99999;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
     display: flex;
     flex-direction: column;
     /*align-items: center;*/
@@ -27,16 +34,15 @@
     padding: 48px;
     width: 20vw;
     min-width: 350px;
-    background: #FFFFFF;
     box-shadow: 0px 2px 20px rgba(26, 25, 29, 0.2);
     border-radius: 6px;
 }
 
 .header{
     font-style: normal;
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 33px;
+    font-weight: 600 !important;
+    font-size: 24px !important;
+    line-height: 33px !important;
 }
 
 .inputs{
@@ -46,16 +52,22 @@
     gap: 24px;
 }
 
-.container.hide:is([data-dont-animate="1"]) {
+.content.hide:is([data-dont-animate="1"]) {
     animation: fade_out 0s ease-in-out forwards;
 }
 
-.container.hide:is([data-dont-animate="0"]) {
+.content.hide:is([data-dont-animate="0"]) {
     animation: fade_out .5s ease-in-out forwards;
 }
 
-.container.show{
+.content.show{
     animation: fade_in .5s ease-in-out forwards;
+}
+
+.exit{
+    position: absolute;
+    right: 15px;
+    top: 15px;
 }
 
 @keyframes fade_in {
