@@ -3,6 +3,7 @@ import {Box, Divider} from "@mui/material";
 import cl from './style.module.css'
 import {messages} from "../../languages/messages";
 import {useTranslation} from "react-i18next";
+import {Scrollbars} from "react-custom-scrollbars";
 
 export interface DragResizeInterface {
     maxHeight: string;
@@ -47,7 +48,6 @@ const DragResizeContainer = (data: DragResizeInterface) => {
             const maxHeight = Math.min(containerHeight, newHeight1 + newHeight2);
             // container.style.maxHeight = `${maxHeight}px`;
 
-            console.log(containerHeight, newHeight2, newHeight1)
             // Set the new heights of the divs
             if (newHeight1 > 0 && data.text) {
                 text.style.height = `${newHeight1}px`;
@@ -71,13 +71,15 @@ const DragResizeContainer = (data: DragResizeInterface) => {
     return (
         <Box className={[cl.container, data.text ? '' : cl.disabled].join(' ')}>
             <Divider className={cl.divider}/>
-            <Box id={"initial_text_content"} style={{fontSize: data.fontSize, height: "100%"}} className={cl.text}>
-                {data.text ? data.text :
-                    <Box sx={{display:"grid", placeContent:"center", width:"100%", height:"100%"}}>
-                        {t(messages.main.showText())}
-                    </Box>
-                }
-            </Box>
+            <Scrollbars autoHide={true} autoHeightMin={42}>
+                <Box id={"initial_text_content"} style={{fontSize: data.fontSize, height: "100%"}} className={cl.text}>
+                    {data.text ? data.text :
+                        <Box sx={{display:"grid", placeContent:"center", width:"100%", height:"100%"}}>
+                            {t(messages.main.showText())}
+                        </Box>
+                    }
+                </Box>
+            </Scrollbars>
             <Box className={cl.custom_divider}>
                 <Box className={cl.stick}>
                     <span></span>

@@ -42,7 +42,7 @@ const CustomPrompt = (data: CustomPromptInterface) => {
             if (isDragging) {
                 windowWidth = window.innerWidth;
                 windowHeight = window.innerHeight;
-         
+
                 var posX = event.clientX - offsetX * .5 - 24;
                 var posY = event.clientY - offsetY * .5 - 24;
 
