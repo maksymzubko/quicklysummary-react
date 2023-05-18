@@ -9,11 +9,14 @@ import LoadContext from "../../../contexts/loadContext";
 import authApi from "../../../api/auth/auth.api";
 import {useNavigate} from "react-router-dom";
 import {links} from "../../../router";
+import {useTranslation} from "react-i18next";
+import {messages} from "../../../languages/messages";
 
 const AuthPage = () => {
     const [authLoading, setAuthLoading] = useState(false);
     const [email, setEmail] = useState("")
     const navigate = useNavigate()
+    const {t} = useTranslation()
 
     const handleChangeEmail = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setEmail(event.target.value)
@@ -41,16 +44,16 @@ const AuthPage = () => {
     return (
         <Box className={cl.container}>
             <Box className={cl.form}>
-                <Typography className={cl.login}>Login</Typography>
-                <Typography className={cl.create_account}>or create an account</Typography>
+                <Typography className={cl.login}>{t(messages.login.text1())}</Typography>
+                <Typography className={cl.create_account}>{t(messages.login.text2())}</Typography>
                 <Box className={cl.auth_buttons}>
-                    <AuthButton onClick={googleAuth} icon_data={{icon:GoogleIcon}}>Continue with Google</AuthButton>
-                    <AuthButton onClick={()=>{}} icon_data={{icon:FacebookIcon}}>Continue with Facebook</AuthButton>
-                    <AuthButton onClick={()=>{}} icon_data={{icon:AppleIcon, needRevert: true}}>Continue with Apple</AuthButton>
+                    <AuthButton onClick={googleAuth} icon_data={{icon:GoogleIcon}}>{t(messages.buttons.google())}</AuthButton>
+                    <AuthButton onClick={()=>{}} icon_data={{icon:FacebookIcon}}>{t(messages.buttons.facebook())}</AuthButton>
+                    <AuthButton onClick={()=>{}} icon_data={{icon:AppleIcon, needRevert: true}}>{t(messages.buttons.apple())}</AuthButton>
                 </Box>
-                <Typography className={cl.continue}>or continue with email</Typography>
+                <Typography className={cl.continue}>{t(messages.login.text3())}</Typography>
                 <TextField value={email} onChange={handleChangeEmail} className={cl.text_field} sx={{font:"'Nunito Sans', sans-serif !important"}} placeholder={"name@example.com"} variant={'standard'}/>
-                <AuthButton disabled={!isEmail()} loading={authLoading} onClick={checkIsEmailExists}>Continue</AuthButton>
+                <AuthButton disabled={!isEmail()} loading={authLoading} onClick={checkIsEmailExists}>{t(messages.buttons.continue())}</AuthButton>
             </Box>
         </Box>
     );

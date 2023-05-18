@@ -7,32 +7,35 @@ import cl from './style.module.css'
 import GoogleButton from "../../../components/Button/GoogleButton";
 import {links} from "../../../router";
 import {setAuthorized, setUser} from "../../../redux/store/user/slice";
+import {useTranslation} from "react-i18next";
+import {messages} from "../../../languages/messages";
 
 const GoogleAuth = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const {t} = useTranslation()
 
     const [result, setResult] = useState<boolean>(null)
 
     const content = useMemo(() => {
         if (result === null) {
             return <>
-                <Typography className={cl.oops}>Loading...</Typography>
+                <Typography className={cl.oops}>{t(messages.google.loading())}</Typography>
                 <CircularProgress/>
             </>
         } else if (result === false) {
             return <>
-                <Typography className={cl.oops}>Oops..</Typography>
-                <Typography className={cl.error}>Having trouble trying to sign in with Google..</Typography>
+                <Typography className={cl.oops}>{t(messages.google.oops())}</Typography>
+                <Typography className={cl.error}>{t(messages.google.error())}</Typography>
                 <GoogleButton onClick={() => {
                     navigate(links.auth)
-                }}>Go to login page</GoogleButton>
+                }}>{t(messages.buttons.goto())}</GoogleButton>
             </>
         } else if (result === true) {
             return <>
-                <Typography className={cl.oops}>Authorized</Typography>
-                <Typography className={cl.error}>You will be redirected in few seconds..</Typography>
+                <Typography className={cl.oops}>{t(messages.google.authorized())}</Typography>
+                <Typography className={cl.error}>{t(messages.google.redirect_msg())}</Typography>
                 <CircularProgress/>
             </>
         }

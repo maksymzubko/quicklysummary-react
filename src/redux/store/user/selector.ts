@@ -15,3 +15,8 @@ export const SelectIsAuthorized = createSelector(
     [selectDomain],
     (userState: UserState) => userState.isAuthorized,
 );
+
+export const SelectLanguage = createSelector(
+    [selectDomain],
+    (userState: UserState) => userState.selectedLanguage,
+);

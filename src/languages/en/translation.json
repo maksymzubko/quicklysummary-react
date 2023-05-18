@@ -1,0 +1,64 @@
+{
+  "landing": {
+    "startBtn": "Get started"
+  },
+  "header": {
+    "login": "Login",
+    "contactUs": "Contact us",
+    "logout": "Logout"
+  },
+  "main": {
+    "dropFiles": "Drop your file here",
+    "uploadedFiles": "Uploaded files",
+    "actions": "Actions",
+    "summary": "Summary",
+    "sentences": "10 Sentences",
+    "keywords": "Main Keywords",
+    "p_mentioned": "People Mentioned",
+    "i_discussed": "Issue Discussed",
+    "custom": "Custom",
+    "e_prompt": "Enter your prompt",
+    "start": "Start",
+    "showText": "Here will show all text from your file",
+    "showSummary": "Here will show the general summary of the text above"
+  },
+  "contactUs": {
+    "contactUs": "Contact us",
+    "fields": "Fill in the fields",
+    "allowData": "I allow my personal data to be processed",
+    "name": "Your Name",
+    "message": "Message"
+  },
+  "login": {
+    "text1": "Login",
+    "text2": "or create account",
+    "text3": "or continue with email",
+    "register": "Register",
+    "password": "Password",
+    "c_password": "Confirm password",
+    "email_already": "This email is already taken",
+    "incorrect_pass": "Incorrect password",
+    "email": "Email",
+    "f_password": "Forgot password"
+  },
+  "google": {
+    "oops": "Oops..",
+    "error": "Having trouble trying to sign in with Google..",
+    "authorized": "Authorized",
+    "redirect_msg": "You will be redirected in few seconds..",
+    "loading": "Loading..."
+  },
+  "buttons": {
+    "google": "Continue with Google",
+    "facebook": "Continue with Facebook",
+    "apple": "Continue with Apple",
+    "register": "Register",
+    "login": "Login",
+    "continue": "Continue",
+    "send": "Send",
+    "startBtn": "Get started",
+    "start": "Start",
+    "downloadPdf": "Download as PDF",
+    "goto": "Go to login page"
+  }
+}

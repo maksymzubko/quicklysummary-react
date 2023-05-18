@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState, useTransition} from 'react';
 import {Avatar, Box, Divider, Typography} from "@mui/material";
 import cl from './style.module.css'
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -9,6 +9,8 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {links} from "../../router";
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import HeaderContext from "../../contexts/headerContext";
+import {messages} from "../../languages/messages";
+import {useTranslation} from "react-i18next";
 
 const HeaderDropDown = () => {
     const [show, setShow] = useState(false)
@@ -18,6 +20,7 @@ const HeaderDropDown = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const location = useLocation()
+    const { t } = useTranslation();
 
     useEffect(() => {
         setShow(false)
@@ -59,11 +62,11 @@ const HeaderDropDown = () => {
                 {/*    <MonetizationOnOutlinedIcon fontSize={"small"}/> Plans and Billing*/}
                 {/*</Box>*/}
                 <Box onClick={() => setHelpOpened(true)} className={cl.content}>
-                    <ChatBubbleOutlineIcon fontSize={"small"}/> Contact us
+                    <ChatBubbleOutlineIcon fontSize={"small"}/> {t(messages.header.contactUs())}
                 </Box>
                 <hr/>
                 <Box onClick={logOut} className={cl.content}>
-                    <LogoutIcon fontSize={"small"}/> Log Out
+                    <LogoutIcon fontSize={"small"}/> {t(messages.header.logout())}
                 </Box>
             </Box>
         </Box>

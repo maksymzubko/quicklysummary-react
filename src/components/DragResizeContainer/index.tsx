@@ -1,6 +1,8 @@
 import React, {useEffect} from 'react';
 import {Box, Divider} from "@mui/material";
 import cl from './style.module.css'
+import {messages} from "../../languages/messages";
+import {useTranslation} from "react-i18next";
 
 export interface DragResizeInterface {
     maxHeight: string;
@@ -10,6 +12,7 @@ export interface DragResizeInterface {
 }
 
 const DragResizeContainer = (data: DragResizeInterface) => {
+    const {t} = useTranslation()
     useEffect(() => {
         let startY = 0;
         let startHeight1 = 50;
@@ -71,7 +74,7 @@ const DragResizeContainer = (data: DragResizeInterface) => {
             <Box id={"initial_text_content"} style={{fontSize: data.fontSize, height: "100%"}} className={cl.text}>
                 {data.text ? data.text :
                     <Box sx={{display:"grid", placeContent:"center", width:"100%", height:"100%"}}>
-                        This will show all text from your file
+                        {t(messages.main.showText())}
                     </Box>
                 }
             </Box>

@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import cl from './style.module.css'
 import {Box, ClickAwayListener, TextField, Typography} from "@mui/material";
+import {useTranslation} from "react-i18next";
+import {messages} from "../../languages/messages";
 
 export interface CustomPromptInterface {
     opened: boolean;
@@ -13,6 +15,7 @@ const CustomPrompt = (data: CustomPromptInterface) => {
     const [canClose, setCanClose] = useState(false)
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
+    const {t} = useTranslation()
 
     useEffect(() => {
         setTimeout(() => {
@@ -41,8 +44,8 @@ const CustomPrompt = (data: CustomPromptInterface) => {
         <Box data-dont-animate={"1"} className={[cl.container, data.opened ? cl.show : cl.hide].join(" ")}>
             <ClickAwayListener onClickAway={onClose}>
                 <Box className={cl.content}>
-                    <Typography className={cl.header}>Custom prompt</Typography>
-                    <TextField value={data.value} onChange={(e)=>data.onChange(e.target.value)} placeholder={"Enter your prompt"}
+                    <Typography className={cl.header}>{t(messages.main.custom())}</Typography>
+                    <TextField value={data.value} onChange={(e)=>data.onChange(e.target.value)} placeholder={t(messages.main.e_prompt())}
                                multiline={true} maxRows={5} variant={"standard"}></TextField>
                 </Box>
             </ClickAwayListener>

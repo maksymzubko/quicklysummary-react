@@ -1,4 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {Languages} from "../../../api/user/types";
 
 export interface User {
     email: string | null,
@@ -8,12 +9,14 @@ export interface User {
 
 export interface UserState {
     isAuthorized: boolean | null,
-    user: User | null
+    user: User | null,
+    selectedLanguage: string
 }
 
 const INITIAL_STATE: UserState = {
     user: null,
-    isAuthorized: false
+    isAuthorized: false,
+    selectedLanguage: "en"
 };
 
 const userSlice = createSlice({
@@ -26,8 +29,11 @@ const userSlice = createSlice({
         setAuthorized: (state, action: PayloadAction<{isAuthorized: boolean}>) => {
             state.isAuthorized = action.payload.isAuthorized;
         },
+        setLanguage: (state, action: PayloadAction<{language: string}>) => {
+            state.selectedLanguage = action.payload.language;
+        },
     }
 })
 
 export default userSlice.reducer;
-export const { setUser, setAuthorized } = userSlice.actions;
+export const { setUser, setAuthorized, setLanguage } = userSlice.actions;

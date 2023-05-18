@@ -14,10 +14,11 @@ export interface SelectorData {
     animationSide: AnimationSides;
     onChangeValue: (lang: Languages) => void;
     theme?: "white" | "black";
+    initialValue?: Languages;
 }
 
 const CustomSelector = (data: SelectorData) => {
-    const [selected, setSelected] = useState(data.data[0])
+    const [selected, setSelected] = useState(data.initialValue ?? data.data[0])
     const [opened, setOpened] = useState(false)
 
     const select = (newContent: Languages) => {

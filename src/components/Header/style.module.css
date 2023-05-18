@@ -5,7 +5,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1% 5%;
+    padding: 1% 6%;
 }
 
 .container img{
@@ -30,5 +30,11 @@
     display: flex;
     align-items: center;
     gap: 20px;
+}
+
+@media screen and (max-width: 1400px){
+    .container{
+        padding: 1% 3%;
+    }
 }
 
