@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
+import React, {LegacyRef, useCallback, useContext, useEffect, useRef, useState} from 'react';
 import {Box, Divider, IconButton, SvgIcon} from "@mui/material";
 import cl from './style.module.css'
 import Sidebar from "./Sidebar/index";
@@ -31,6 +31,11 @@ import CustomPrompt from "../../components/CustomPromt/index";
 import {useTranslation} from "react-i18next";
 import {messages} from "../../languages/messages";
 import IconBtn from "../../components/IconButton";
+import {Scrollbars} from "react-custom-scrollbars";
+
+const B = () => {
+    return (<Box></Box>)
+}
 
 const MainPage = () => {
     const {enqueueSnackbar, closeSnackbar} = useSnackbar();
@@ -47,10 +52,10 @@ const MainPage = () => {
     const [types, setTypes] = useState<TypeResponse[]>([])
     const [loadingList, setLoadingList] = useState([])
 
-    const containerRef = useRef<HTMLDivElement>(null);
+    const containerRef = useRef<Scrollbars>(null);
     const leftRef = useRef(null);
     const rightRef = useRef(null);
-    const { t } = useTranslation();
+    const {t} = useTranslation();
 
     useEffect(() => {
         userApi.getTickets()
@@ -88,43 +93,43 @@ const MainPage = () => {
 
     const changeActiveGpt = (id: number) => {
         setSelectedGpt(id)
-        if(id === 6)
-        {
+        if (id === 6) {
             setPromptOpened(true)
         }
     }
 
     const scrollLeft = () => {
         if (containerRef.current) {
-            if(rightRef.current)
-                    rightRef.current.style.display = "flex"
-            if(leftRef.current)
-            {
-                if(containerRef.current.scrollLeft - 100 <= 0)
+            const values = containerRef.current.getValues()
+            containerRef.current.scrollLeft(values.scrollLeft - 100); // Adjust the scroll distance as needed
+
+            if (rightRef.current)
+                rightRef.current.style.display = "flex"
+            if (leftRef.current) {
+                if (values.left <= 0.2)
                     leftRef.current.style.display = "none"
                 else
                     leftRef.current.style.display = "flex"
             }
 
-            containerRef.current.scrollLeft -= 100; // Adjust the scroll distance as needed
         }
     };
 
     const scrollRight = () => {
         if (containerRef.current) {
-            if(rightRef.current)
-            {
+            const values = containerRef.current.getValues()
+            containerRef.current.scrollLeft(values.scrollLeft + 100); // Adjust the scroll distance as needed
+
+            if (rightRef.current) {
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 //@ts-ignore
-                if(containerRef.current?.scrollLeftMax - (containerRef.current.scrollLeft + 100) <= 0)
+                if (values.left >= 0.8)
                     rightRef.current.style.display = "none"
                 else
                     rightRef.current.style.display = "flex"
             }
-            if(leftRef.current)
+            if (leftRef.current)
                 leftRef.current.style.display = "flex"
-
-            containerRef.current.scrollLeft += 100; // Adjust the scroll distance as needed
         }
     };
 
@@ -219,7 +224,7 @@ const MainPage = () => {
     }
 
     const getName = (id: number) => {
-        switch (id){
+        switch (id) {
             case 1:
                 return t(messages.main.summary())
             case 2:
@@ -237,7 +242,8 @@ const MainPage = () => {
 
     return (
         <Box className={[cl.container].join(' ')}>
-            <CustomPrompt opened={promptOpened} onClose={()=>setPromptOpened(false)} onChange={handleChangePrompt} value={promptText}/>
+            <CustomPrompt opened={promptOpened} onClose={() => setPromptOpened(false)} onChange={handleChangePrompt}
+                          value={promptText}/>
             <Sidebar onSelectTicket={onChangeTicket} statuses={statuses} tickets={tickets}/>
             <Box id={"content"} className={[cl.content, !initialText() ? cl.disabled : ''].join(' ')}>
                 <Box style={{height: "50%"}} id={"text"} className={cl.text_reader}>
@@ -247,29 +253,40 @@ const MainPage = () => {
                             <Box className={cl.buttons}>
                                 <IconBtn onClick={scaleUp}>
                                     <SvgIcon viewBox={"0 0 32 32"}>
-                                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
                                             <circle cx="16" cy="16" r="16" fill="white"/>
                                             <rect width="20" height="20" transform="translate(6 6)" fill="white"/>
-                                            <path d="M21 16.8317H16.8334V20.9984C16.8334 21.2194 16.7456 21.4313 16.5893 21.5876C16.433 21.7439 16.221 21.8317 16 21.8317C15.779 21.8317 15.567 21.7439 15.4108 21.5876C15.2545 21.4313 15.1667 21.2194 15.1667 20.9984V16.8317H11C10.779 16.8317 10.567 16.7439 10.4108 16.5876C10.2545 16.4313 10.1667 16.2194 10.1667 15.9984C10.1667 15.7774 10.2545 15.5654 10.4108 15.4091C10.567 15.2528 10.779 15.165 11 15.165H15.1667V10.9984C15.1667 10.7774 15.2545 10.5654 15.4108 10.4091C15.567 10.2528 15.779 10.165 16 10.165C16.221 10.165 16.433 10.2528 16.5893 10.4091C16.7456 10.5654 16.8334 10.7774 16.8334 10.9984V15.165H21C21.221 15.165 21.433 15.2528 21.5893 15.4091C21.7456 15.5654 21.8334 15.7774 21.8334 15.9984C21.8334 16.2194 21.7456 16.4313 21.5893 16.5876C21.433 16.7439 21.221 16.8317 21 16.8317Z" fill="#1A191D"/>
+                                            <path
+                                                d="M21 16.8317H16.8334V20.9984C16.8334 21.2194 16.7456 21.4313 16.5893 21.5876C16.433 21.7439 16.221 21.8317 16 21.8317C15.779 21.8317 15.567 21.7439 15.4108 21.5876C15.2545 21.4313 15.1667 21.2194 15.1667 20.9984V16.8317H11C10.779 16.8317 10.567 16.7439 10.4108 16.5876C10.2545 16.4313 10.1667 16.2194 10.1667 15.9984C10.1667 15.7774 10.2545 15.5654 10.4108 15.4091C10.567 15.2528 10.779 15.165 11 15.165H15.1667V10.9984C15.1667 10.7774 15.2545 10.5654 15.4108 10.4091C15.567 10.2528 15.779 10.165 16 10.165C16.221 10.165 16.433 10.2528 16.5893 10.4091C16.7456 10.5654 16.8334 10.7774 16.8334 10.9984V15.165H21C21.221 15.165 21.433 15.2528 21.5893 15.4091C21.7456 15.5654 21.8334 15.7774 21.8334 15.9984C21.8334 16.2194 21.7456 16.4313 21.5893 16.5876C21.433 16.7439 21.221 16.8317 21 16.8317Z"
+                                                fill="#1A191D"/>
                                         </svg>
                                     </SvgIcon>
                                 </IconBtn>
                                 <IconBtn onClick={scaleDown}>
                                     <SvgIcon viewBox={"0 0 32 32"}>
-                                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
                                             <circle cx="16" cy="16" r="16" fill="white"/>
                                             <rect width="20" height="20" transform="translate(6 6)" fill="white"/>
-                                            <path d="M21 16.8317H11C10.779 16.8317 10.567 16.7439 10.4108 16.5876C10.2545 16.4313 10.1667 16.2194 10.1667 15.9984C10.1667 15.7774 10.2545 15.5654 10.4108 15.4091C10.567 15.2528 10.779 15.165 11 15.165H21C21.221 15.165 21.433 15.2528 21.5893 15.4091C21.7456 15.5654 21.8334 15.7774 21.8334 15.9984C21.8334 16.2194 21.7456 16.4313 21.5893 16.5876C21.433 16.7439 21.221 16.8317 21 16.8317Z" fill="#1A191D"/>
+                                            <path
+                                                d="M21 16.8317H11C10.779 16.8317 10.567 16.7439 10.4108 16.5876C10.2545 16.4313 10.1667 16.2194 10.1667 15.9984C10.1667 15.7774 10.2545 15.5654 10.4108 15.4091C10.567 15.2528 10.779 15.165 11 15.165H21C21.221 15.165 21.433 15.2528 21.5893 15.4091C21.7456 15.5654 21.8334 15.7774 21.8334 15.9984C21.8334 16.2194 21.7456 16.4313 21.5893 16.5876C21.433 16.7439 21.221 16.8317 21 16.8317Z"
+                                                fill="#1A191D"/>
                                         </svg>
                                     </SvgIcon>
                                 </IconBtn>
                                 {scale !== 100 && <IconBtn onClick={reset}>
                                     <SvgIcon viewBox={"0 0 32 32"}>
-                                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
                                             <circle cx="16" cy="16" r="16" fill="white"/>
                                             <rect width="20" height="20" transform="translate(6 6)" fill="white"/>
-                                            <path d="M15.2231 12.6739L12.3391 9.84783C11.9879 9.50362 11.9095 9.10978 12.104 8.6663C12.2984 8.22283 12.6449 8.00072 13.1433 8H18.8557C19.3549 8 19.7017 8.2221 19.8962 8.6663C20.0907 9.11051 20.0119 9.50435 19.6599 9.84783L16.776 12.6739C16.665 12.7826 16.5449 12.8641 16.4155 12.9185C16.2861 12.9728 16.1474 13 15.9995 13C15.8516 13 15.713 12.9728 15.5836 12.9185C15.4542 12.8641 15.334 12.7826 15.2231 12.6739Z" fill="#1A191D"/>
-                                            <path d="M16.7769 19.3261L19.6609 22.1522C20.0121 22.4964 20.0905 22.8902 19.896 23.3337C19.7016 23.7772 19.3551 23.9993 18.8567 24L13.1443 24C12.6451 24 12.2983 23.7779 12.1038 23.3337C11.9093 22.8895 11.9881 22.4957 12.3401 22.1522L15.224 19.3261C15.335 19.2174 15.4551 19.1359 15.5845 19.0815C15.7139 19.0272 15.8526 19 16.0005 19C16.1484 19 16.287 19.0272 16.4164 19.0815C16.5458 19.1359 16.666 19.2174 16.7769 19.3261Z" fill="#1A191D"/>
+                                            <path
+                                                d="M15.2231 12.6739L12.3391 9.84783C11.9879 9.50362 11.9095 9.10978 12.104 8.6663C12.2984 8.22283 12.6449 8.00072 13.1433 8H18.8557C19.3549 8 19.7017 8.2221 19.8962 8.6663C20.0907 9.11051 20.0119 9.50435 19.6599 9.84783L16.776 12.6739C16.665 12.7826 16.5449 12.8641 16.4155 12.9185C16.2861 12.9728 16.1474 13 15.9995 13C15.8516 13 15.713 12.9728 15.5836 12.9185C15.4542 12.8641 15.334 12.7826 15.2231 12.6739Z"
+                                                fill="#1A191D"/>
+                                            <path
+                                                d="M16.7769 19.3261L19.6609 22.1522C20.0121 22.4964 20.0905 22.8902 19.896 23.3337C19.7016 23.7772 19.3551 23.9993 18.8567 24L13.1443 24C12.6451 24 12.2983 23.7779 12.1038 23.3337C11.9093 22.8895 11.9881 22.4957 12.3401 22.1522L15.224 19.3261C15.335 19.2174 15.4551 19.1359 15.5845 19.0815C15.7139 19.0272 15.8526 19 16.0005 19C16.1484 19 16.287 19.0272 16.4164 19.0815C16.5458 19.1359 16.666 19.2174 16.7769 19.3261Z"
+                                                fill="#1A191D"/>
                                         </svg>
                                     </SvgIcon>
                                 </IconBtn>}
@@ -286,27 +303,33 @@ const MainPage = () => {
                 </Box>
                 <Box id={"gpt"} className={cl.gpt_context}>
                     <Box className={cl.gpt_buttons_wrapper}>
-                        <Box ref={containerRef} className={cl.gpt_buttons}>
+                        <Box className={cl.gpt_buttons}>
                             {/*<Box className={cl.arrows}>*/}
-                                <IconButton ref={leftRef} onClick={scrollLeft} className={cl.arrow}>
-                                    <ArrowBackIosNewIcon/>
-                                </IconButton>
-                                <IconButton ref={rightRef} onClick={scrollRight} className={cl.arrow}>
-                                    <ArrowForwardIosIcon/>
-                                </IconButton>
+                            <IconButton ref={leftRef} onClick={scrollLeft} className={cl.arrow}>
+                                <ArrowBackIosNewIcon/>
+                            </IconButton>
+                            <IconButton ref={rightRef} onClick={scrollRight} className={cl.arrow}>
+                                <ArrowForwardIosIcon/>
+                            </IconButton>
                             {/*</Box>*/}
-                            {types.map(t => <Box key={t.id} onClick={() => changeActiveGpt(t.id)}
-                                                 className={[cl.gpt_button, selectedGpt === t.id ? cl.active : ""].join(" ")}>{getName(t.id)}</Box>)}
+                            <Scrollbars ref={containerRef} autoHeight={true} autoHeightMin={42}>
+                                <Box className={cl.btn_content}>
+                                    {types.map(t => <Box key={t.id} onClick={() => changeActiveGpt(t.id)}
+                                                         className={[cl.gpt_button, selectedGpt === t.id ? cl.active : ""].join(" ")}>{getName(t.id)}</Box>)}
+                                </Box>
+                            </Scrollbars>
                         </Box>
                     </Box>
                     {/*<Box className={cl.top_content}>*/}
-                    <Box id={"gpt_text_content"} sx={{fontSize: getFontSize()}} className={cl.gpt_text}>
-                        {gptText() ??
-                            <Box sx={{display: "grid", placeContent: "center", width: "100%", height: "100%"}}>
-                                {t(messages.main.showSummary())}
-                            </Box>
-                        }
-                    </Box>
+                    <Scrollbars autoHide={true} autoHeightMin={42}>
+                        <Box id={"gpt_text_content"} sx={{fontSize: getFontSize()}} className={cl.gpt_text}>
+                            {gptText() ??
+                                <Box sx={{display: "grid", placeContent: "center", width: "100%", height: "100%"}}>
+                                    {t(messages.main.showSummary())}
+                                </Box>
+                            }
+                        </Box>
+                    </Scrollbars>
                     {/*</Box>*/}
                     <Divider className={cl.divider}/>
                     <Box className={cl.gpt_buttons_bottom}>
