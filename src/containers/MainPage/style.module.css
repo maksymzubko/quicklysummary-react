@@ -194,6 +194,10 @@
     width: 100%;
 }
 
+.gpt_buttons div:nth-child(1){
+    /*overflow-y: hidden;*/
+}
+
 .arrows:hover{
     /*background: none;*/
 }
@@ -218,7 +222,7 @@
     /*background: linear-gradient(92.97deg, rgba(255,255,255,1) 12.63%, rgba(255,255,255,0) 91.44%);*/
 }
 
-@media screen and (max-width: 1600px) {
+@media screen and (max-width: 1800px) {
     .arrow{
         display: flex;
     }

@@ -13,9 +13,11 @@
     color: #1A191D;
     z-index: 99999;
     background: rgba(0,0,0,.2);
+
 }
 
 .content{
+    transition: transform .2s ease-in-out;
     user-select: none;
     background: white;
     z-index: 99999;
@@ -58,6 +60,10 @@
 
 .content.hide:is([data-dont-animate="0"]) {
     animation: fade_out .5s ease-in-out forwards;
+}
+
+.scaled{
+    transform: translate(-50%, -50%) scale(1.05);
 }
 
 .content.show{
