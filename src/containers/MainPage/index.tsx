@@ -334,7 +334,7 @@ const MainPage = () => {
                                 </SvgIcon>
                             </IconBtn>
                             {/*</Box>*/}
-                            <Scrollbars renderTrackHorizontal={D} ref={containerRef} autoHeight={true}>
+                            <Scrollbars renderTrackHorizontal={D} ref={containerRef} autoHeight={true} autoHeightMin={42}>
                                 <Box className={cl.btn_content}>
                                     {types.map(t => <Box key={t.id} onClick={() => changeActiveGpt(t.id)}
                                                          className={[cl.gpt_button, selectedGpt === t.id ? cl.active : ""].join(" ")}>{getName(t.id)}</Box>)}
