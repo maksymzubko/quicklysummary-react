@@ -18,5 +18,7 @@ export interface LoginResponse {
     email: string,
     access_token: string,
     uuid: string,
+    name: string | null;
+    avatar: string | null;
 }
 
