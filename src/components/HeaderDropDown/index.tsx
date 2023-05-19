@@ -61,17 +61,25 @@ const HeaderDropDown = () => {
         if(canClose) setShow(false)
     }
 
+    const getName = () => {
+        if(userData?.name)
+            return userData?.name
+        if(userData?.uuid)
+            return userData.uuid
+        return "Incorrect"
+    }
+
     return (
         <Box className={cl.container}>
             <Box onClick={() => setShow(!show)} className={cl.click_item}>
-                <Avatar sx={{height:"32px", width:"32px"}}/>
+                <Avatar src={userData?.avatar ?? ""} sx={{height:"32px", width:"32px"}}/>
             </Box>
             <ClickAwayListener onClickAway={onClose}>
                 <Box data-dont-animate={"1"} className={[cl.dropdown_container, show ? cl.show : cl.hide].join(' ')}>
                     <Box className={cl.header}>
-                        <Avatar/>
+                        <Avatar src={userData?.avatar ?? ""}/>
                         <Box className={cl.info}>
-                            <Typography className={cl.name}>{userData?.uuid ?? "Incorrect UID"}</Typography>
+                            <Typography className={cl.name}>{getName()}</Typography>
                             <Typography className={cl.email}>{userData?.email ?? "Incorrect email"}</Typography>
                         </Box>
                     </Box>

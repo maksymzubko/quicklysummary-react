@@ -5,6 +5,8 @@ export interface User {
     email: string | null,
     id: number | null,
     uuid: string | null,
+    avatar: string | null,
+    name: string | null
 }
 
 export interface UserState {

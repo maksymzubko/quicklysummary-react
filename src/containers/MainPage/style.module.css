@@ -191,7 +191,11 @@
 .gpt_buttons div div {
     scroll-behavior: smooth;
     scrollbar-width: none;
-    width: 100%;
+    /*width: 100%;*/
+}
+
+.gpt_buttons div:nth-child(1) div:nth-child(2) div{
+    background-color: transparent;
 }
 
 .gpt_buttons div:nth-child(1){
