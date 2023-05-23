@@ -46,7 +46,7 @@
 }
 
 .selected .text{
-    max-width: 85%;
+    max-width: 75%;
 }
 
 .selected input{
@@ -77,4 +77,10 @@
 
 .icons{
     display: none;
+}
+
+@media screen and (max-width: 1000px) {
+    .selected .text{
+        max-width: 60%;
+    }
 }

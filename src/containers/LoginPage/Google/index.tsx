@@ -47,11 +47,11 @@ const GoogleAuth = () => {
             authApi.loginViaToken(token)
                 .then((res) => {
                     setResult(true)
+                    dispatch(setUser({user: res}))
+                    dispatch(setAuthorized({isAuthorized: true}))
                     setTimeout(() => {
-                        dispatch(setUser({user: res}))
                         navigate(links.main)
-                        dispatch(setAuthorized({isAuthorized: true}))
-                    }, 1500)
+                    }, 1)
                 }).catch(() => {
                 setResult(false)
             })

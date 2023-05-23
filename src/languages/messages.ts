@@ -68,6 +68,11 @@ export const messages = {
     authorized: () => _t(translations.google.authorized, 'Authorized'),
     redirect_msg: () => _t(translations.google.redirect_msg, 'You will be redirected in few seconds..'),
     loading: () => _t(translations.google.loading, 'Loading..'),
+  },
+  actions:{
+    delete_t: () => _t(translations.actions.delete_t, 'Delete ticket'),
+    edit_t: () => _t(translations.actions.edit_t, 'Edit ticket'),
+    upload_t: () => _t(translations.actions.upload_t, 'File processing')
   }
 };
 

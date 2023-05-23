@@ -59,5 +59,10 @@
     "start": "スタート",
     "downloadPdf": "PDFでダウンロード",
     "goto": "ログインページに移動"
+  },
+  "actions": {
+    "delete_t": "チケットを削除する",
+    "edit_t": "チケットを編集する",
+    "upload_t": "ファイル処理"
   }
 }
