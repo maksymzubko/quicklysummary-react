@@ -18,7 +18,9 @@
 
     min-width: 350px;
     overflow: auto;
-    height: calc(70vh - var(--header-height));
+    /*height: calc(70vh - var(--header-height));*/
+    height: calc(50vh - var(--header-height));
+    min-height: 400px;
     padding: 48px;
     width: 20vw;
     background: #FFFFFF;

@@ -51,9 +51,9 @@ const AuthPage = () => {
                     <AuthButton style={{"& img":{position:"absolute", left:"10%"}}} onClick={()=>{}} icon_data={{icon:FacebookIcon}}>{t(messages.buttons.facebook())}</AuthButton>
                     <AuthButton style={{"& img":{position:"absolute", left:"10%"}}} onClick={()=>{}} icon_data={{icon:AppleIcon, needRevert: true}}>{t(messages.buttons.apple())}</AuthButton>
                 </Box>
-                <Typography className={cl.continue}>{t(messages.login.text3())}</Typography>
-                <TextField value={email} onChange={handleChangeEmail} className={cl.text_field} sx={{font:"'Nunito Sans', sans-serif !important"}} placeholder={"name@example.com"} variant={'standard'}/>
-                <AuthButton disabled={!isEmail()} loading={authLoading} onClick={checkIsEmailExists}>{t(messages.buttons.continue())}</AuthButton>
+                {/*<Typography className={cl.continue}>{t(messages.login.text3())}</Typography>*/}
+                {/*<TextField value={email} onChange={handleChangeEmail} className={cl.text_field} sx={{font:"'Nunito Sans', sans-serif !important"}} placeholder={"name@example.com"} variant={'standard'}/>*/}
+                {/*<AuthButton disabled={!isEmail()} loading={authLoading} onClick={checkIsEmailExists}>{t(messages.buttons.continue())}</AuthButton>*/}
             </Box>
         </Box>
     );

@@ -60,5 +60,10 @@
     "start": "Start",
     "downloadPdf": "Download as PDF",
     "goto": "Go to login page"
+  },
+  "actions": {
+    "delete_t": "Delete ticket",
+    "edit_t": "Edit ticket",
+    "upload_t": "File processing"
   }
 }

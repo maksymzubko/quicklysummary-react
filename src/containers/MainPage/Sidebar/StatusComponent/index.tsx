@@ -2,6 +2,8 @@ import React from 'react';
 import {Box, LinearProgress} from "@mui/material";
 import {makeStyles} from '@mui/styles'
 import cl from './style.module.css'
+import {messages} from "../../../../languages/messages";
+import {useTranslation} from "react-i18next";
 
 export interface StatusInterface {
     id: number | string;
@@ -58,9 +60,10 @@ const Progress = ({ value, status }: {value: number,status: status}) =>  {
 
 
 const StatusComponent = (data: StatusInterface) => {
+    const {t} = useTranslation()
     return (
         <Box className={cl.container}>
-            <Box className={cl.status}>{data.status}</Box>
+            <Box className={cl.status}>{data.status === 'Uploading' ? t(messages.actions.upload_t()) : data.status}</Box>
             <Box className={cl.content}>{data.name}</Box>
             <Box className={cl.progress}>
                 <Progress value={getValue(data.status)} status={data.status}/>

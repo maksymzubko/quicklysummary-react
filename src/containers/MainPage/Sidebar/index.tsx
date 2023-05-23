@@ -1,8 +1,7 @@
 import React from 'react';
-import {Box, SvgIcon, Typography} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import cl from './style.module.css'
 import {AlertType, DropzoneArea} from "react-mui-dropzone";
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import FilesListComponent from "./FilesListComponent";
 import Icon from './assets/dropfile.svg'
 import StatusesListComponent from "./StatusesListComponent";
@@ -69,7 +68,7 @@ const Sidebar = (data: SidebarProps) => {
                     dropzoneText={""}
                     acceptedFiles={['.txt', '.mp3', '.mp4']}
                     filesLimit={1}
-                    maxFileSize={500000}
+                    maxFileSize={1024*1024*1024}
                     Icon={DropIcon}
                     classes={{text: cl.text, root: cl.drop_field_root, textContainer: cl.text_container}}
                 />

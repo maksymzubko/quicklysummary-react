@@ -9,6 +9,8 @@ import userApi from "../../../../api/user/user.api";
 import {AlertType} from "react-mui-dropzone";
 import {SnackbarKey, useSnackbar} from "notistack";
 import IconBtn from "../../../../components/IconButton";
+import {messages} from "../../../../languages/messages";
+import {useTranslation} from "react-i18next";
 
 export interface FileTicket {
     ticketId: number;
@@ -67,6 +69,7 @@ const FileComponent = (data: FileInterface) => {
     const [loading, setLoading] = useState(false)
     const dispatch = useDispatch()
     const {enqueueSnackbar, closeSnackbar} = useSnackbar();
+    const {t} = useTranslation()
 
     //@ts-ignore
     const handleChangeValue = (e: any) => {
@@ -101,15 +104,15 @@ const FileComponent = (data: FileInterface) => {
     const deleteTicket = () => {
         setLoading(true)
         const id = uuidv4();
-        dispatch(addStatus({status: {id, status: "In process", name: `Delete ticket #${data.ticket.ticketId}`}}))
+        dispatch(addStatus({status: {id, status: "In process", name: `${t(messages.actions.delete_t())} #${data.ticket.ticketId}`}}))
         userApi.deleteTicket(data.ticket.ticketId)
             .then(() => {
                 dispatch(removeTicket({ticketId: data.ticket.ticketId}))
-                dispatch(updateStatus({status: {id, status: "Done", name: `Delete ticket #${data.ticket.ticketId}`}}))
+                dispatch(updateStatus({status: {id, status: "Done", name: `${t(messages.actions.delete_t())} #${data.ticket.ticketId}`}}))
             })
             .catch(err => {
                 onAlert(err?.response?.data?.message[0], "error");
-                dispatch(updateStatus({status: {id, status: "Error", name: `Delete ticket #${data.ticket.ticketId}`}}))
+                dispatch(updateStatus({status: {id, status: "Error", name: `${t(messages.actions.delete_t())} #${data.ticket.ticketId}`}}))
             })
             .finally(() => setLoading(false))
     }
@@ -117,7 +120,7 @@ const FileComponent = (data: FileInterface) => {
     const cancelDelete = () => {
         setCurrentAction("None")
     }
-    const maxLength = 40;
+    const maxLength = 25;
     const confirmEdit = () => {
         console.log(currentValue, data.ticket)
         if (currentValue === data.ticket.ticketName) {
@@ -127,15 +130,15 @@ const FileComponent = (data: FileInterface) => {
 
         setLoading(true)
         const id = uuidv4();
-        dispatch(addStatus({status: {id, status: "In process", name: `Rename ticket #${data.ticket.ticketId}`}}))
+        dispatch(addStatus({status: {id, status: "In process", name: `${t(messages.actions.edit_t())} #${data.ticket.ticketId}`}}))
         userApi.renameTicket(data.ticket.ticketId, currentValue)
             .then(() => {
                 dispatch(updateTicketName({id: data.ticket.ticketId, name: currentValue}))
-                dispatch(updateStatus({status: {id, status: "Done", name: `Rename ticket #${data.ticket.ticketId}`}}))
+                dispatch(updateStatus({status: {id, status: "Done", name: `${t(messages.actions.edit_t())} #${data.ticket.ticketId}`}}))
             })
             .catch(err => {
                 onAlert(err?.response?.data?.message[0], "error");
-                dispatch(updateStatus({status: {id, status: "Error", name: `Rename ticket #${data.ticket.ticketId}`}}))
+                dispatch(updateStatus({status: {id, status: "Error", name: `${t(messages.actions.edit_t())} #${data.ticket.ticketId}`}}))
                 cancelEdit()
             })
             .finally(() => {
