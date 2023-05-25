@@ -6,7 +6,7 @@ const HeaderContext = createContext({
     promptOpened: false,
     setPromptOpened: (value: boolean) => {},
     promptText: "",
-    setPromptText: (value: string) => {}
+    setPromptText: (value: string) => {},
 });
 
 export default HeaderContext;

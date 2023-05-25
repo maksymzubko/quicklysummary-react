@@ -1,11 +1,11 @@
 import './App.css'
 import {useRoutes} from "react-router-dom";
-import {routes as r} from "./router";
+import {routesDesktop as rd, routesMobile as rm} from "./router";
 import {useDispatch, useSelector} from "react-redux";
-import {SelectIsAuthorized} from "./redux/store/user/selector";
+import {SelectIsAuthorized, SelectIsMobile} from "./redux/store/user/selector";
 import LoadContext from "./contexts/loadContext";
 import React, {Suspense, useEffect, useState} from "react";
-import cl from "./layouts/LoadLayout/style.module.css";
+import cl from "./layouts/Desktop/LoadLayout/style.module.css";
 import {Box, LinearProgress, Typography} from "@mui/material";
 import authApi from "./api/auth/auth.api";
 import {setAuthorized, setLanguage, setUser} from "./redux/store/user/slice";
@@ -15,7 +15,15 @@ import {Languages} from "./api/user/types";
 
 function App() {
     const isAuthorized = useSelector(SelectIsAuthorized)
-    const routes = useRoutes(isAuthorized ? r.authorized : r["not-authorized"]);
+    const isMobile = useSelector(SelectIsMobile)
+    let routes;
+
+    if(isMobile)
+        routes = isAuthorized ? rm.authorized : rm["not-authorized"];
+    else
+        routes = isAuthorized ? rd.authorized : rd["not-authorized"];
+
+    const route = useRoutes(routes);
     const [loaded, setLoaded] = useState(false)
     const dispatch = useDispatch();
 
@@ -68,7 +76,7 @@ function App() {
                             </Box>
                         </Box>
                     </Box>}>
-                    {routes}
+                    {route}
                 </Suspense>
             </LoadContext.Provider>
         </>

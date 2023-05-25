@@ -1,0 +1,37 @@
+.container{
+    background: #1A191D;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 99999;
+}
+
+.container img{
+    max-width: 32px;
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 19px;
+    font-family: Manrope;
+    cursor: pointer;
+}
+
+.menu{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}

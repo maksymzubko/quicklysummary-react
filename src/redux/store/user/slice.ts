@@ -12,13 +12,15 @@ export interface User {
 export interface UserState {
     isAuthorized: boolean | null,
     user: User | null,
-    selectedLanguage: string
+    selectedLanguage: string,
+    isMobile: boolean | null,
 }
 
 const INITIAL_STATE: UserState = {
     user: null,
     isAuthorized: false,
-    selectedLanguage: "en"
+    selectedLanguage: "en",
+    isMobile: false
 };
 
 const userSlice = createSlice({
@@ -34,8 +36,11 @@ const userSlice = createSlice({
         setLanguage: (state, action: PayloadAction<{language: string}>) => {
             state.selectedLanguage = action.payload.language;
         },
+        setIsMobile: (state, action: PayloadAction<{isMobile: boolean}>) => {
+            state.isMobile = action.payload.isMobile;
+        },
     }
 })
 
 export default userSlice.reducer;
-export const { setUser, setAuthorized, setLanguage } = userSlice.actions;
+export const { setUser, setAuthorized, setLanguage, setIsMobile } = userSlice.actions;

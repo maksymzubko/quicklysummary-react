@@ -1,5 +1,5 @@
 import {lazy, Suspense} from "react";
-import SuspenseLoader from "./components/SuspenseLoader";
+import SuspenseLoader from "@components/SuspenseLoader";
 import {Navigate} from "react-router-dom";
 
 const Loader = (Component: any) => (props: any) =>
@@ -9,35 +9,39 @@ const Loader = (Component: any) => (props: any) =>
         </Suspense>
     );
 
-const AuthPage = Loader(
-    lazy(() => import('./containers/LoginPage/Default/index'))
+const AuthPageDesktop = Loader(
+    lazy(() => import('@containers/Desktop/LoginPage/Default'))
 );
 
-const GoogleAuthPage = Loader(
-    lazy(() => import('./containers/LoginPage/Google/index'))
+const GoogleAuthPageDesktop = Loader(
+    lazy(() => import('@containers/Desktop/LoginPage/Google'))
 );
 
-const HeaderLayout = lazy(() => import('./layouts/HeaderLayout/index'))
+const HeaderLayout = lazy(() => import('@layouts/HeaderLayout'))
 
-const LandingPage = Loader(
-    lazy(() => import('./containers/Landing/index'))
+const LandingPageDesktop = Loader(
+    lazy(() => import('@containers/Desktop/Landing'))
 );
 
-const LoginPage = Loader(
-    lazy(() => import('./containers/LoginPage/Login/index'))
+const LandingPageMobile = Loader(
+    lazy(() => import('@containers/Mobile/Landing'))
 );
 
-const RegisterPage = Loader(
-    lazy(() => import('./containers/LoginPage/Register/index'))
+const LoginPageDesktop = Loader(
+    lazy(() => import('@containers/Desktop/LoginPage/Login'))
 );
 
-const MainPage = Loader(
-    lazy(() => import('./containers/MainPage/index'))
+const RegisterPageDesktop = Loader(
+    lazy(() => import('@containers/Desktop/LoginPage/Register'))
+);
+
+const MainPageDesktop = Loader(
+    lazy(() => import('@containers/Desktop/MainPage'))
 );
 
 
 
-export const links = {
+export const linksDesktop = {
     auth: '/auth',
     register: '/auth/register',
     landing: '/',
@@ -45,7 +49,7 @@ export const links = {
     login: '/auth/login',
 }
 
-export const routes =
+export const routesDesktop =
     {
         'authorized':
             [
@@ -56,11 +60,11 @@ export const routes =
                         [
                             {
                                 path: '/',
-                                element: <LandingPage/>,
+                                element: <LandingPageDesktop/>,
                             },
                             {
                                 path: '/main',
-                                element: <MainPage/>,
+                                element: <MainPageDesktop/>,
                             },
                             {
                                 path: "*",
@@ -79,23 +83,65 @@ export const routes =
                         [
                             {
                                 path: '/',
-                                element: <LandingPage/>,
+                                element: <LandingPageDesktop/>,
                             },
                             {
                                 path: '/auth',
-                                element: <AuthPage/>,
+                                element: <AuthPageDesktop/>,
                             },
                             {
                                 path: '/auth/google',
-                                element: <GoogleAuthPage/>
+                                element: <GoogleAuthPageDesktop/>
                             },
                             {
                                 path: '/auth/login',
-                                element: <LoginPage/>
+                                element: <LoginPageDesktop/>
                             },
                             {
                                 path: '/auth/register',
-                                element: <RegisterPage/>
+                                element: <RegisterPageDesktop/>
+                            },
+                            {
+                                path: "*",
+                                element: <Navigate to={"/"}/>
+                            }
+                        ]
+                }
+
+            ]
+    }
+
+export const routesMobile =
+    {
+        'authorized':
+            [
+                {
+                    path: '/',
+                    element: <HeaderLayout/>,
+                    children:
+                        [
+                            {
+                                path: '/',
+                                element: <LandingPageMobile/>,
+                            },
+                            {
+                                path: "*",
+                                element: <Navigate to={"/"}/>
+                            }
+                        ]
+                }
+            ],
+        'not-authorized':
+            [
+
+                {
+                    path: '/',
+                    element: <HeaderLayout/>,
+                    children:
+                        [
+                            {
+                                path: '/',
+                                element: <LandingPageMobile/>,
                             },
                             {
                                 path: "*",

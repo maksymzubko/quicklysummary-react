@@ -20,3 +20,8 @@ export const SelectLanguage = createSelector(
     [selectDomain],
     (userState: UserState) => userState.selectedLanguage,
 );
+
+export const SelectIsMobile = createSelector(
+    [selectDomain],
+    (userState: UserState) => userState.isMobile,
+);

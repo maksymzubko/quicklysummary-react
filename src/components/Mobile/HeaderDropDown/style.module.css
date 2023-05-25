@@ -1,0 +1,110 @@
+.icon_hamburger{
+
+}
+
+.icon{
+    width: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+}
+
+.icon_hamburger span{
+    display: block;
+    width: 100%;
+    height: 3px;
+    /*margin-bottom: 4px;*/
+
+    background: #cdcdcd;
+    border-radius: 3px;
+
+    z-index: 1;
+
+    transform-origin: 4px 0px;
+
+    transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+    background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+    opacity 0.55s ease;
+}
+
+.icon_hamburger span:first-child
+{
+    transform-origin: 0% 0%;
+}
+
+.icon_hamburger span:nth-child(3)
+{
+    transform-origin: 0% 100%;
+}
+
+.icon_hamburger.open span:nth-child(1){
+    transform: rotate(45deg) translate(-2px, -1px);
+}
+
+.icon_hamburger.open span:nth-child(2){
+    opacity: 0;
+    transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+.icon_hamburger.open span:nth-child(3){
+    transform: rotate(-45deg) translate(0, -1px);
+}
+
+.drop_menu{
+    opacity: 0;
+    z-index: -1;
+    background: #FFFFFF;
+    position: absolute;
+    height: calc(var(--height) - 64px);
+    transform: translateY(64px);
+    left: 100%;
+    top: 0;
+    width: 100%;
+    transition: .5s ease-in-out;
+
+    padding: 36px 48px;
+}
+
+.icon_hamburger.open .drop_menu{
+    z-index: 999;
+    opacity: 1;
+    left: 0;
+}
+
+.user_data{
+    margin-bottom: 15px;
+    color: #1A191D;
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.info{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.name{
+    font-style: normal;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    line-height: 19px !important;
+}
+
+.email{
+    font-style: normal;
+    font-weight: 600 !important;
+    font-size: 12px !important;
+    line-height: 14px !important;
+}
+
+.name, .email {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+}
