@@ -1,6 +1,6 @@
 import {Box, TextField, Typography} from "@mui/material";
 import {ChangeEvent, useCallback, useContext, useEffect, useState} from "react";
-import cl from './style.module.css'
+import _class from './style.module.css'
 import AuthButton from "@components/Button/AuthButton";
 import GoogleIcon from './assets/google_icon.svg'
 import AppleIcon from './assets/apple_icon.svg'
@@ -11,7 +11,9 @@ import {linksDesktop} from "router";
 import {useTranslation} from "react-i18next";
 import {messages} from "languages/messages";
 
-const AuthPage = () => {
+const AuthPage = (classes?: any) => {
+    const cl = classes?._class ?? _class;
+    console.log(cl)
     const [authLoading, setAuthLoading] = useState(false);
     const [email, setEmail] = useState("")
     const navigate = useNavigate()
@@ -50,9 +52,9 @@ const AuthPage = () => {
                     <AuthButton style={{"& img":{position:"absolute", left:"10%"}}} onClick={()=>{}} icon_data={{icon:FacebookIcon}}>{t(messages.buttons.facebook())}</AuthButton>
                     <AuthButton style={{"& img":{position:"absolute", left:"10%"}}} onClick={()=>{}} icon_data={{icon:AppleIcon, needRevert: true}}>{t(messages.buttons.apple())}</AuthButton>
                 </Box>
-                {/*<Typography className={cl.continue}>{t(messages.login.text3())}</Typography>*/}
-                {/*<TextField value={email} onChange={handleChangeEmail} className={cl.text_field} sx={{font:"'Nunito Sans', sans-serif !important"}} placeholder={"name@example.com"} variant={'standard'}/>*/}
-                {/*<AuthButton disabled={!isEmail()} loading={authLoading} onClick={checkIsEmailExists}>{t(messages.buttons.continue())}</AuthButton>*/}
+                <Typography className={cl.continue}>{t(messages.login.text3())}</Typography>
+                <TextField value={email} onChange={handleChangeEmail} className={cl.text_field} sx={{font:"'Nunito Sans', sans-serif !important"}} placeholder={"name@example.com"} variant={'standard'}/>
+                <AuthButton disabled={!isEmail()} loading={authLoading} onClick={checkIsEmailExists}>{t(messages.buttons.continue())}</AuthButton>
             </Box>
         </Box>
     );

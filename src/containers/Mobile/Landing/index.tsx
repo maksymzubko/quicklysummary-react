@@ -5,7 +5,7 @@ import LayoutButton from "@components/Button/LayoutButton";
 import {useSelector} from "react-redux";
 import {SelectIsAuthorized} from "redux/store/user/selector";
 import {useNavigate} from "react-router-dom";
-import {linksDesktop} from "router";
+import {linksMobile} from "router";
 import {useTranslation} from "react-i18next";
 import {messages} from "languages/messages";
 
@@ -25,7 +25,7 @@ const LandingPage = () => {
                     tincidunt ut vel. Ut vitae eget tortor volutpat. Massa auctor massa vulputate nunc purus tempus.
                     Nulla dapibus enim nec sed sapien feugiat aliquam.</Typography>
                 <LayoutButton onClick={() => {
-                    navigate(isAuthorized ? linksDesktop.main : linksDesktop.auth)
+                    navigate(isAuthorized ? linksMobile.main : linksMobile.auth)
                 }}>{t(messages.buttons.startBtn())}</LayoutButton>
             </Box>
         </Box>

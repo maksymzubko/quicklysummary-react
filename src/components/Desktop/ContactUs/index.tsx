@@ -73,7 +73,7 @@ const ContactUs = (data: ContactUsInterface) => {
 
     useEffect(() => {
         setTimeout(() => {
-            document.querySelector(`.${cl.container}`).setAttribute("data-dont-animate", "0");
+            document.querySelector(`.${cl.container}`)?.setAttribute("data-dont-animate", "0");
         }, 500)
     }, [])
 

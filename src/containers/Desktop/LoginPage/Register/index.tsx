@@ -5,13 +5,14 @@ import {useDispatch} from "react-redux";
 import authApi from "api/auth/auth.api";
 import {setAuthorized, setUser} from "redux/store/user/slice";
 import {linksDesktop} from "router";
-import cl from "./style.module.css";
+import _class from "./style.module.css";
 import LoginButton from "@components/Button/LoginButton";
 import {SnackbarKey, useSnackbar} from "notistack";
 import {messages} from "languages/messages";
 import {useTranslation} from "react-i18next";
 
-const RegisterPage = () => {
+const RegisterPage = (classes?: any) => {
+    const cl = classes?._class ?? _class;
     const location = useLocation()
     const [email, setEmail] = useState(location.state?.email ?? "")
     const [password, setPassword] = useState("")

@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useState} from 'react';
 import {Box, TextField, Typography} from "@mui/material";
 import {useLocation, useNavigate} from "react-router-dom";
-import cl from './style.module.css'
+import _class from './style.module.css'
 import LoginButton from "@components/Button/LoginButton";
 import authApi from "api/auth/auth.api";
 import {useDispatch} from "react-redux";
@@ -11,7 +11,8 @@ import {SnackbarKey, useSnackbar} from "notistack";
 import {useTranslation} from "react-i18next";
 import {messages} from "languages/messages";
 
-const LoginPage = () => {
+const LoginPage = (classes?: any) => {
+    const cl = classes?._class ?? _class;
     const location = useLocation()
     const [email, setEmail] = useState(location.state?.email ?? "")
     const [password, setPassword] = useState("")

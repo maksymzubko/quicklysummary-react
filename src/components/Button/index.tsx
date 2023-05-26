@@ -23,6 +23,7 @@ export interface ButtonData {
     loading?: boolean;
     disabled?: boolean;
     style?: any;
+    selected?: boolean;
 }
 
 const CustomButton = (data: ButtonData) => {
@@ -43,7 +44,8 @@ const CustomButton = (data: ButtonData) => {
                 cl.container,
                 data.loading ? cl.disabled : '',
                 data.disabled ? cl.disabled : '',
-                data?.icon_data?.position === 'end' ? cl.end_icon : ""
+                data?.icon_data?.position === 'end' ? cl.end_icon : "",
+                data?.selected ? cl.selected: '',
             ].join(' ')}>
             {data.loading && <CircularProgress sx={{height: '16px !important', width: '16px !important'}}/>}
             {!data.loading && <>

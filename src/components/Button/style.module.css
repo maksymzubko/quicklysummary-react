@@ -30,7 +30,8 @@
     opacity: .3;
 }
 
-.container:hover{
+.container:hover,
+.container.selected{
     color: var(--data-colorhover);
     background: var(--data-backgroundcolorhover);
     cursor: pointer;

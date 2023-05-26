@@ -13,8 +13,16 @@ const AuthPageDesktop = Loader(
     lazy(() => import('@containers/Desktop/LoginPage/Default'))
 );
 
+const AuthPageMobile = Loader(
+    lazy(() => import('@containers/Mobile/Login/Default'))
+);
+
 const GoogleAuthPageDesktop = Loader(
     lazy(() => import('@containers/Desktop/LoginPage/Google'))
+);
+
+const GoogleAuthPageMobile = Loader(
+    lazy(() => import('@containers/Mobile/Login/Google'))
 );
 
 const HeaderLayout = lazy(() => import('@layouts/HeaderLayout'))
@@ -31,8 +39,16 @@ const LoginPageDesktop = Loader(
     lazy(() => import('@containers/Desktop/LoginPage/Login'))
 );
 
+const LoginPageMobile = Loader(
+    lazy(() => import('@containers/Mobile/Login/Login'))
+);
+
 const RegisterPageDesktop = Loader(
     lazy(() => import('@containers/Desktop/LoginPage/Register'))
+);
+
+const RegisterPageMobile = Loader(
+    lazy(() => import('@containers/Mobile/Login/Register'))
 );
 
 const MainPageDesktop = Loader(
@@ -48,6 +64,14 @@ export const linksDesktop = {
     main: '/main',
     login: '/auth/login',
 }
+export const linksMobile = {
+    auth: '/auth',
+    register: '/auth/register',
+    landing: '/',
+    main: '/main',
+    login: '/auth/login',
+}
+
 
 export const routesDesktop =
     {
@@ -142,6 +166,22 @@ export const routesMobile =
                             {
                                 path: '/',
                                 element: <LandingPageMobile/>,
+                            },
+                            {
+                                path: '/auth',
+                                element: <AuthPageMobile/>,
+                            },
+                            {
+                                path: '/auth/google',
+                                element: <GoogleAuthPageMobile/>
+                            },
+                            {
+                                path: '/auth/login',
+                                element: <LoginPageMobile/>
+                            },
+                            {
+                                path: '/auth/register',
+                                element: <RegisterPageMobile/>
                             },
                             {
                                 path: "*",

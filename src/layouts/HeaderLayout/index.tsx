@@ -52,7 +52,7 @@ const HeaderLayout = () => {
             value={{helpOpened, setHelpOpened, promptOpened, promptText, setPromptOpened, setPromptText}}>
             {!isMobile && <ContactUs opened={helpOpened} onClose={() => setHelpOpened(false)}/>}
             {isMobile ? <HeaderMobile/> : <HeaderDesktop/>}
-            <Box margin={"0 auto"} maxWidth={isMobile ? "768px" : "1920px"} height={isMobile ? "auto" : `${height}px`}>
+            <Box margin={"0 auto"} maxWidth={isMobile ? "768px" : "1920px"} height={isMobile ? "100%" : `${height}px`}>
                 <Outlet/>
             </Box>
         </HeaderContext.Provider>

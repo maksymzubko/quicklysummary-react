@@ -1,11 +1,15 @@
 import React, {useState} from 'react';
 import {Avatar, Box, Typography} from "@mui/material";
 import cl from './style.module.css'
-import {useSelector} from "react-redux";
-import {SelectIsAuthorized, SelectUser} from "../../../redux/store/user/selector";
-import HeaderButton, {HeaderMobileButton} from "@components/Button/HeaderButton";
+import {useDispatch, useSelector} from "react-redux";
+import {SelectIsAuthorized, SelectLanguage, SelectUser} from "../../../redux/store/user/selector";
 import {useNavigate} from "react-router-dom";
-import {linksDesktop} from "../../../router";
+import {linksDesktop, linksMobile} from "router";
+import CustomSelector from "@components/Mobile/CustomSelector";
+import i18n from "i18next";
+import {Languages} from "api/user/types";
+import {setAuthorized, setLanguage, setUser} from "redux/store/user/slice";
+import {useTranslation} from "react-i18next";
 
 export interface HeaderDropDownInterface {
     opened: boolean,
@@ -14,12 +18,19 @@ export interface HeaderDropDownInterface {
 
 const HeaderDropDown = (data: HeaderDropDownInterface) => {
     const [isOpened, setIsOpened] = useState(data.opened)
+    const [isOpenedSelector, setIsOpenedSelector] = useState(false)
     const isAuthorized = useSelector(SelectIsAuthorized)
     const userData = useSelector(SelectUser)
     const navigate = useNavigate()
+
+    const dispatch = useDispatch()
+    const currentLang = useSelector(SelectLanguage) as Languages
+    const { t } = useTranslation();
+
     const handleStateHandler = () => {
         if (isOpened) {
             setIsOpened(false)
+            setIsOpenedSelector(false)
             data.onClose()
         } else {
             setIsOpened(true)
@@ -27,17 +38,38 @@ const HeaderDropDown = (data: HeaderDropDownInterface) => {
     }
 
     const getName = () => {
-        if(userData?.name)
+        if (userData?.name)
             return userData?.name
-        if(userData?.uuid)
+        if (userData?.uuid)
             return userData.uuid
         return "Incorrect"
     }
 
+    const handleSelectLanguage = (id: Languages) => {
+        i18n.changeLanguage(Languages[id]);
+        localStorage.setItem('qs_language', Languages[id]);
+        dispatch(setLanguage({language: Languages[id]}));
+    }
+
+    const handleClickLogin = () => {
+        navigate(linksMobile.auth)
+        handleStateHandler()
+    }
+
+    const logOut = () => {
+        localStorage.removeItem('quickly_summary_token')
+        dispatch(setUser({user: null}))
+        dispatch(setAuthorized({isAuthorized: false}))
+        navigate(linksDesktop.landing)
+
+        handleStateHandler()
+    }
+
+
     return (
         <Box className={cl.container}>
             <Box className={[cl.icon_hamburger, isOpened ? cl.open : ""].join(' ')}>
-                <Box onClick={handleStateHandler}  className={cl.icon}>
+                <Box onClick={handleStateHandler} className={cl.icon}>
                     <span></span>
                     <span></span>
                     <span></span>
@@ -51,12 +83,20 @@ const HeaderDropDown = (data: HeaderDropDownInterface) => {
                                 <Typography className={cl.email}>{userData?.email ?? "Incorrect email"}</Typography>
                             </Box>
                         </Box>
-                    :
-                        <HeaderMobileButton onClick={()=>{navigate(linksDesktop.auth)}}>Login</HeaderMobileButton>
+                        :
+                        <Box onClick={handleClickLogin} className={cl.login}>Login</Box>
                     }
-                    <Box className={cl.selector}>
-                        SELECTOR
-                    </Box>
+                    <CustomSelector content={[
+                        {id: "en", name: "EN"},
+                        {id: "ru", name: "RU"},
+                        {id: "jp", name: "JP"},
+                        {id: "ua", name: "UA"}
+                    ]}
+                                    opened={isOpenedSelector}
+                                    selected={currentLang}
+                                    name={"Language"}
+                                    onSelect={handleSelectLanguage}/>
+                    {isAuthorized && <Box className={cl.logout} onClick={logOut}>Log out</Box>}
                 </Box>
             </Box>
         </Box>

@@ -3,14 +3,15 @@ import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import {useCallback, useEffect, useMemo, useState} from "react";
 import authApi from "api/auth/auth.api";
 import {useDispatch} from "react-redux";
-import cl from './style.module.css'
+import _class from './style.module.css'
 import GoogleButton from "@components/Button/GoogleButton";
 import {linksDesktop} from "router";
 import {setAuthorized, setUser} from "redux/store/user/slice";
 import {useTranslation} from "react-i18next";
 import {messages} from "languages/messages";
 
-const GoogleAuth = () => {
+const GoogleAuth = (classes?: any) => {
+    const cl = classes?._class ?? _class;
     const [searchParams, setSearchParams] = useSearchParams();
     const dispatch = useDispatch()
     const navigate = useNavigate()
