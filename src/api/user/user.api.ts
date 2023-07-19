@@ -6,7 +6,7 @@ class UserApi {
 
     async getTickets(): Promise<TicketResponse[]> {
         const response: AxiosResponse = await agent.get(
-            `user/tickets`
+            `tickets`
         );
 
         if (response.status === 200 || response.status === 201) {
@@ -18,7 +18,7 @@ class UserApi {
 
     async getTypes(): Promise<TypeResponse[]> {
         const response: AxiosResponse = await agent.get(
-            `user/types`
+            `gpt/types`
         );
 
         if (response.status === 200 || response.status === 201) {
@@ -30,7 +30,7 @@ class UserApi {
 
     async uploadFile(data: FormData): Promise<TicketResponse> {
         const response: AxiosResponse = await agent.post(
-            `user/upload`,
+            `tickets/upload`,
             data,
             {headers: {"Content-Type": "multipart/form-data"}}
         );
@@ -44,7 +44,7 @@ class UserApi {
 
     async sendRequest(data: GptRequest): Promise<GptResponseDto[]> {
         const response: AxiosResponse = await agent.post(
-            `user/send-gpt-request`,
+            `gpt/send-gpt-request`,
             data
         );
 
@@ -57,7 +57,7 @@ class UserApi {
 
     async deleteTicket(id: number): Promise<boolean> {
         const response: AxiosResponse = await agent.delete(
-            `user/ticket/${id}`,
+            `tickets/${id}`,
         );
 
         if (response.status === 200 || response.status === 201) {
@@ -69,7 +69,7 @@ class UserApi {
 
     async renameTicket(id: number, name: string): Promise<boolean> {
         const response: AxiosResponse = await agent.post(
-            `user/rename-ticket/${id}`,
+            `tickets/rename-ticket/${id}`,
             {name}
         );
 
