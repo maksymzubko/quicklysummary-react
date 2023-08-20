@@ -4,7 +4,6 @@ import dotenv from 'dotenv'
 
 // https://vitejs.dev/config/
 // dotenv.config({path: process.env.NODE_ENV === 'production' ? './.env.prod' : './env.dev'})
-const env = loadEnv(mode, process.cwd());
 
 export default defineConfig(({command, mode})=> {
   const env = loadEnv(mode, process.cwd());
